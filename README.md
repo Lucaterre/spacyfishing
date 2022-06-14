@@ -1,6 +1,6 @@
 # spaCy fishing
 
-![Python Version](https://img.shields.io/badge/Python-%3E%3D%203.7-%2313aab7) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Tests](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml) [![Built with spaCy](https://img.shields.io/badge/built%20with-spaCy-09a3d5.svg)](https://spacy.io)
+![Python Version](https://img.shields.io/badge/Python-%3E%3D%203.7-%2313aab7) [![PyPI version](https://badge.fury.io/py/spacyfishing.svg)](https://badge.fury.io/py/spacyfishing) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Tests](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml) [![Built with spaCy](https://img.shields.io/badge/built%20with-spaCy-09a3d5.svg)](https://spacy.io)
 
 <!-- add pip badge -->
 
@@ -33,7 +33,7 @@ pip install spacyfishing
 
 ```bash
 git clone https://github.com/Lucaterre/spacyfishing.git
-virtualvenv --python=/usr/bin/python3.8 venv
+virtualenv --python=/usr/bin/python3.8 venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
