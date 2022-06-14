@@ -1,6 +1,12 @@
-"""
+# -*- coding: UTF-8 -*-
 
 """
+entity_fishing_linker.py
+
+SpaCy wrapper to call Entity-fishing API
+as disambiguation and entity linking component.
+"""
+
 import time
 
 import requests
@@ -14,8 +20,20 @@ from spacy.tokens import Doc, Span
     "language": "en",
     "description_required": False
 })
-class EntityFishing(object):
-    def __init__(self, nlp: Language, name: str, url_base: str, language: str, description_required: bool):
+class EntityFishing:
+    """
+    szs
+    """
+    def __init__(self,
+                 url_base: str,
+                 language: str,
+                 description_required: bool):
+        """
+
+        :param url_base:
+        :param language:
+        :param description_required:
+        """
         if not url_base.endswith("/"):
             url_base += "/"
         self.url_base = url_base
@@ -36,12 +54,23 @@ class EntityFishing(object):
 
     @staticmethod
     def generic_client(method: str, url: str, params=None, files=None) -> requests.Response:
+        """
+
+        :param method:
+        :param url:
+        :param params:
+        :param files:
+        :return:
+        """
         if files is None:
             files = {}
         if params is None:
             params = {}
 
-        def make_requests(type_method: str, type_url: str, type_params: dict, type_files: dict) -> requests.Response:
+        def make_requests(type_method: str,
+                          type_url: str,
+                          type_params: dict,
+                          type_files: dict) -> requests.Response:
             res = requests.request(method=type_method,
                                    url=type_url,
                                    headers={
@@ -51,13 +80,14 @@ class EntityFishing(object):
                                    params=type_params)
             return res
 
-        try:
+        response = make_requests(method, url, params, files)
+        print(response)
+        print(type(response))
+        if response.status_code == 429:
+            time.sleep(int(response.headers["Retry-After"]))
             response = make_requests(method, url, params, files)
-        except Exception:
-            time.sleep(5)
-            response = make_requests(method, url, params, files)
-        finally:
-            pass
+        #elif response.status_code == 404:
+        #    response =
 
         return response
 
@@ -69,6 +99,7 @@ class EntityFishing(object):
                                    params=self.language)
 
     def disambiguate_text(self, files: dict) -> requests.Response:
+        """Method"""
         url_disambiguate = self.url_base + "disambiguate"
         return self.generic_client(method='POST', url=url_disambiguate, files=files)
 
@@ -114,6 +145,7 @@ class EntityFishing(object):
                 if self.flag_desc:
                     try:
                         req_desc = self.concept_look_up(span._.kb_qid)
+                        req_desc.raise_for_status()
                         res_desc = req_desc.json()
                         span._.description = res_desc['definitions'][0]['definition']
                     except KeyError:
