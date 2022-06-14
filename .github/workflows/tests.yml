@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.9', '3.8', '3.7']
-        os: ubuntu-latest
+        os: [ubuntu-latest]
     name: Python ${{ matrix.python-version }} - ${{matrix.os}}
     steps:
     - uses: actions/checkout@v2
