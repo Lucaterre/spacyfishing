@@ -42,6 +42,6 @@ class TestEfSpacy(unittest.TestCase):
         self.assertEqual(self.doc._.metadata['status_code'], 200)
 
     def test_linking(self):
-        self.assertEqual(len(self.doc.ents), 80)
+        self.assertEqual(len(self.doc.ents), 77)
 
 
