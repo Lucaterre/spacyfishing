@@ -31,7 +31,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Lucaterre/spacyfishing",
     install_requires=['spacy>=3.3.1', 'requests>=2.28.0'],
-    packages=find_packages(),
+    packages=find_packages("spacyfishing"),
     classifiers=CLASSIFIERS,
     python_requires='>=3.8',
     entry_points={
