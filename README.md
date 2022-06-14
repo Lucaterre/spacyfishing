@@ -4,11 +4,9 @@
 
 <!-- add pip badge -->
 
----
-
 A spaCy wrapper of [Entity-Fishing](https://nerd.readthedocs.io/en/latest/overview.html), a tool for named entity disambiguation and linking on Wikidata.
 
-This extension allows using Entity-Fishing as a pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to Wikidata knowledge base.
+This extension allows using Entity-Fishing tool as a spaCy pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to Wikidata knowledge base.
 
 ## Table of contents
 
@@ -24,8 +22,6 @@ This extension allows using Entity-Fishing as a pipeline component to disambigua
 
 
 ## Installation
-
----
 
 ### normal
 
@@ -44,9 +40,8 @@ pip install -r requirements.txt
 
 ## Usage
 
----
 
-First, install a [pre-trained spaCy language model](https://spacy.io/models) for the NER task, for example for English model:
+First, install a [pre-trained spaCy language model](https://spacy.io/models) for the NER task:
 
 ```bash
 python -m spacy download en_core_web_sm
@@ -170,8 +165,6 @@ doc._.metadata
 
 ## Configuration parameters
 
----
-
 ```
 - api_ef_base          : URL of the entity-fishing API endpoint. Defaults to Huma-Num server.
 - language             : Specify language of KB ressources for entity-fishing API. Defaults to "en".
@@ -202,9 +195,7 @@ For details on Entity-Fishing response, follow this [link](https://nerd.readthed
 
 ## Recommendations
 
----
-
-If Entity-fishing is deployed locally or on specific server, specify the URL of the new Entity-fishing API in the config:
+If Entity-fishing is deployed locally or on specific server, specify the URL of the new Entity-fishing API endpoint in the config:
 
 ```
 nlp.add_pipe("entityfishing", config={"api_ef_base": "<api-endpoint>"})
@@ -215,8 +206,6 @@ This can be useful, if you work with more recent dumps of Wikidata knowledge bas
 To install your own instance of Entity-Fishing, follow this [link](https://nerd.readthedocs.io/en/latest/build.html).
 
 ## Visualise results
-
----
 
 To visualize the named entities and their wikidata links, use the manual option of displaCy:
 
@@ -251,8 +240,6 @@ The visualizer is serving on http://0.0.0.0:5000
 
 ## External Ressources
 
----
-
 - [spaCy homepage](https://spacy.io/)
 - [spaCy GitHub](https://github.com/explosion/spaCy)
 
@@ -263,9 +250,7 @@ The visualizer is serving on http://0.0.0.0:5000
 
 ## Specifications
 
----
-
-This component is experimental, it may be used for research, particularly in digital humanities and it may evolve in the future.
+This component is experimental, it may be used for research, and it may evolve in the future.
 
 The structure component was inspired by another spacy extension called [spaCyOpenTapioca](https://github.com/UB-Mannheim/spacyopentapioca).
 
