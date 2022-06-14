@@ -4,7 +4,6 @@ import subprocess
 from setuptools import find_packages, setup
 
 spacyfishing_version = subprocess.run(['git', 'describe', '--tags'], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
-assert "." in spacyfishing_version
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
