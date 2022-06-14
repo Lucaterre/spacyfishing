@@ -25,6 +25,8 @@ class EntityFishing:
     szs
     """
     def __init__(self,
+                 nlp: Language,
+                 name: str,
                  url_base: str,
                  language: str,
                  description_required: bool):

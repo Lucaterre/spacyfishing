@@ -1,4 +1,4 @@
-name: CI
+name: Tests
 
 on:
   push:
@@ -8,18 +8,20 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.8', '3.7']
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    name: Python ${{ matrix.python-version }} - ${{matrix.os}}
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
-        python-version: "3.8"
+        python-version: ${{ matrix.python-version }}
         architecture: x64
-    - name: Install dependencies
     - run: | 
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Code quality (pylint)
     - run: pylint ./spacyfishing/*.py
-    - name: run functional tests (pytest)
     - run: pytest ./tests
