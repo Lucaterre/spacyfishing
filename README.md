@@ -234,7 +234,7 @@ params = {"text": doc_fr.text,
 spacy.displacy.serve(params, style="ent", manual=True, options=options)
 ```
 
-![example-vizualizer](./docs/vizualizer.png)
+<img src="./docs/vizualizer.png" alt="vizualizer" width="1050" height="80"/>
 
 The visualizer is serving on http://0.0.0.0:5000
 
