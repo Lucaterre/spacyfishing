@@ -14,7 +14,7 @@ setup(
     version=spacyfishing_version,
     author="Lucas Terriel",
     license="MIT",
-    description="A spaCy wrapper of Entity-Fishing as component for named entity disambiguation and linking on Wikidata.",
+    description="A spaCy wrapper of Entity-Fishing (component) for named entity disambiguation and linking on Wikidata.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Lucaterre/spacyfishing",
