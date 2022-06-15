@@ -22,7 +22,7 @@ This extension allows using Entity-Fishing tool as a spaCy pipeline component to
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
  * [Visualise results](#Visualise-results) 
- * [External Ressources](#External-ressources)
+ * [Details](#Details)
 
 
 ## Installation
@@ -79,9 +79,9 @@ for ent in doc_en.ents:
 ### Get extra information from Wikidata
 By default, the component, as seen previously, attaches to the span only the QID, the Wikidata url and the score. 
 However, it is possible to retrieve other information such as a short description of the entity, a standardized term, 
-or other identifiers from knowledge bases, for example Geonames or VIAF.
+or other identifiers from knowledge bases related to Wikidata concept, for example Geonames id, VIAF id, etc.
 
-To access to extra informations it, specify `True` in the `extra_info` parameter in the component configuration:
+To access to extra informations about wikidata entity, specify `True` in the `extra_info` parameter in the component configuration:
 
 ```Python
 
@@ -138,7 +138,7 @@ for ent in doc_en.ents:
 
 ### Use other language
 
-By default, disambiguation model resources are set to English, to use other languages, specify the language code in the `language` parameter in the component configuration:
+By default, disambiguation model resources are set to English, to use an other language, specify the language code in the `language` parameter in the component configuration:
 
 ```Python
 import spacy 
@@ -189,7 +189,7 @@ doc._.annotations
  }
 ```
 
-To access to query metadata for the response by Entity-Fishing API :
+To access to query metadata for the response by Entity-Fishing API:
 
 ```
 doc._.metadata
@@ -201,16 +201,14 @@ doc._.metadata
 ## Configuration parameters
 
 ```
-- api_ef_base          : URL of the entity-fishing API endpoint. Defaults to Huma-Num server.
-- language             : Specify language of KB ressources for entity-fishing API. Defaults to "en".
+- api_ef_base          : URL of the Entity-Fishing API endpoint. Defaults to Huma-Num server.
+- language             : Specify language of KB ressources for Entity-Fishing API. Defaults to "en".
 - extra_info           : Get extra Wikidata informations about entity from service "concept look-up" 
-                         of entity-fishing API as short Wikipedia description, normalised term, others KB ids. Defaults to false.
-- filter_statements    : If `extra_info` set to True, filter other KB ids eg. ['P214', 'P244' ...] .Defaults to empty list.  
+                         of Entity-Fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
+- filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...] .Defaults to empty list.  
 ```
 
 ## Attributes
-
----
 
 * **Doc** extensions:
 
@@ -231,10 +229,10 @@ doc._.metadata
    span._.nerd_score         : Selection confidence score for the disambiguated entity.
   
    extra extensions (if `extra_info` set to True)
-   ----------------------------------------------Iden
+   ----------------------------------------------
    
    span._.description     : Short Wikipedia definition of the concept.
-   span._.src_description : The Wikipedia KB from which the definition comes from (eg. wikipedia-en).
+   span._.src_description : The name of Wikipedia KB from which the definition comes from (eg. wikipedia-en).
    span._.normal_term     : The normalised term name.
    span._.other_ids       : Others statements in KB relates to Wikipedia concept.
    ```
@@ -255,7 +253,7 @@ To install your own instance of Entity-Fishing, follow this [link](https://nerd.
 
 ## Visualise results
 
-To visualize the named entities and their wikidata links, use the manual option of displaCy:
+To visualise the named entities and their wikidata links, use the manual option of displaCy:
 
 ```Python
 import spacy 
@@ -296,7 +294,7 @@ The visualizer is serving on http://0.0.0.0:5000
 - [Entity-Fishing web client](http://nerd.huma-num.fr/nerd/)
 - [Entity-Fishing documentation](https://nerd.readthedocs.io/en/latest/)
 
-## Specifications
+## Details
 
 This component is experimental, it may be used for research, and it may evolve in the future.
 
