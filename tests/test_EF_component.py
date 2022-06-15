@@ -47,6 +47,8 @@ class TestEfSpacyNormalConfig(unittest.TestCase):
         doc = nlp(self.text_example)
         self.assertEqual(doc._.metadata["ok"], True)
         self.assertEqual(doc._.metadata["status_code"], 200)
+        print(doc._.annotations["entities"])
+        # 25
         self.assertEqual(len(doc._.annotations["entities"]), 22)
 
     def test_bad_property_ef_client(self):
