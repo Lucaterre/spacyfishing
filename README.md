@@ -22,6 +22,7 @@ This extension allows using Entity-Fishing tool as a spaCy pipeline component to
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
  * [Visualise results](#Visualise-results) 
+ * [External ressources](#External-ressources)
  * [Details](#Details)
 
 
@@ -284,7 +285,7 @@ spacy.displacy.serve(params, style="ent", manual=True, options=options)
 
 The visualizer is serving on http://0.0.0.0:5000
 
-## External Ressources
+## External ressources
 
 - [spaCy homepage](https://spacy.io/)
 - [spaCy GitHub](https://github.com/explosion/spaCy)
