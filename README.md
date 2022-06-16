@@ -4,9 +4,9 @@
 
 <!-- add pip badge -->
 
-A spaCy wrapper of [Entity-Fishing](https://nerd.readthedocs.io/en/latest/overview.html), a tool for named entity disambiguation and linking on Wikidata.
+A spaCy wrapper for [Entity-Fishing](https://github.com/kermitt2/entity-fishing), a tool for named entity recognition, linking and disambiguation against Wikidata.
 
-This extension allows using Entity-Fishing tool as a spaCy pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to Wikidata knowledge base.
+This extension allows using Entity-Fishing tool as a spaCy pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to the Wikidata knowledge base (KB).
 
 ## Table of contents
 
@@ -23,7 +23,7 @@ This extension allows using Entity-Fishing tool as a spaCy pipeline component to
  * [Recommendations](#Recommendations)
  * [Visualise results](#Visualise-results) 
  * [External ressources](#External-ressources)
- * [Details](#Details)
+ * [About](#About)
 
 
 ## Installation
@@ -52,7 +52,7 @@ First, install a [pre-trained spaCy language model](https://spacy.io/models) for
 python -m spacy download en_core_web_sm
 ```
 
-Note that it is possible to use custom NER model.
+Note that it is possible to use custom NER models.
 
 ### Simple example
 
@@ -78,11 +78,11 @@ for ent in doc_en.ents:
 ```
 
 ### Get extra information from Wikidata
-By default, the component, as seen previously, attaches to the span only the QID, the Wikidata url and the score. 
+By default, the component, as seen previously, attaches to the span only the QID, the Wikidata URL and the score. 
 However, it is possible to retrieve other information such as a short description of the entity, a standardized term, 
-or other identifiers from knowledge bases related to Wikidata concept, for example Geonames id, VIAF id, etc.
+or other identifiers from knowledge bases related to Wikidata concepts, for example Geonames id, VIAF id, etc.
 
-To access to extra informations about wikidata entity, specify `True` in the `extra_info` parameter in the component configuration:
+For accessing extra information about a wikidata entity, specify `True` in the `extra_info` parameter in the component configuration:
 
 ```Python
 
@@ -108,8 +108,8 @@ for ent in doc_en.ents:
 ('Paris', 'GPE', 'Q90', 'Paris', "'''Paris''' is the [[Capital city|capital]] and most populous [[city]] of [[France]], with an administrative-limits area of and a 2015 population of 2,229,621. The city is a [[Communes of France|commune]] and [[Departments of France|department]], and the capital-heart of the [[Île-de-France]] ''[[Region in France|region]]'' (colloquially known as the 'Paris Region'), whose 12,142,802 2016 population represents roughly 18 percent of the population of France. By the 17th century, Paris had become one of Europe's major centres of finance, commerce, fashion, science, and the arts, a position that it retains still today. The Paris Region had a [[GDP]] of €649.6 billion (US $763.4 billion) in 2014, accounting for 30.4 percent of the GDP of France. According to official estimates, in 2013-14 the Paris Region had [[List of cities by GDP|the third-highest GDP in the world and the largest regional GDP in the EU]].", 'wikipedia-en', [{'propertyName': 'coat of arms', 'propertyId': 'P237', 'value': 'Q1925366'}, {'propertyName': "topic's main Wikimedia portal", 'propertyId': 'P1151', 'value': 'Q8253667'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q161741'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q209549'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q223140'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q230127'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q238723'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q245546'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q259463'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q270230'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q275118'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q163948'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q169293'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q171689'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q175129'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q187153'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q191066'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q194420'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q197297'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q200126'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q204622'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q210720'}, {'propertyName': 'contains administrative territorial entity', 'propertyId': 'P150', 'value': 'Q3278478'}, {'propertyName': 'motto text', 'propertyId': 'P1451', 'value': {'text': 'Fluctuat nec mergitur', 'language': 'la'}}, {'propertyName': 'category for people born here', 'propertyId': 'P1464', 'value': 'Q9226347'}, {'propertyName': 'Dewey Decimal Classification', 'propertyId': 'P1036', 'value': '2--44361'}, {'propertyName': 'country', 'propertyId': 'P17', 'value': 'Q142'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q5119'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q22927616'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q6465'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q866196'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q1549591'}, {'propertyName': 'instance of', 'propertyId': 'P31', 'value': 'Q515'}, {'propertyName': 'located in the administrative territorial entity', 'propertyId': 'P131', 'value': 'Q13917'}, {'propertyName': 'located in the administrative territorial entity', 'propertyId': 'P131', 'value': 'Q1142326'}, {'propertyName': 'located in the administrative territorial entity', 'propertyId': 'P131', 'value': 'Q70972'}, {'propertyName': 'image', 'propertyId': 'P18', 'value': 'Airplane view Paris 01.jpg'}, {'propertyName': 'coat of arms image', 'propertyId': 'P94', 'value': 'Grandes Armes de Paris.svg'}, {'propertyName': 'locator map image', 'propertyId': 'P242', 'value': 'Paris-Position.svg'}, {'propertyName': 'locator map image', 'propertyId': 'P242', 'value': 'Paris-Position.svg'}, {'propertyName': 'legislative body', 'propertyId': 'P194', 'value': 'Q775994'}, {'propertyName': 'BnF ID', 'propertyId': 'P268', 'value': '152821567'}, {'propertyName': 'Library of Congress authority ID', 'propertyId': 'P244', 'value': 'n79058874'}, {'propertyName': 'SUDOC authorities', 'propertyId': 'P269', 'value': '080467008'}, {'propertyName': 'VIAF ID', 'propertyId': 'P214', 'value': '158822968'}, {'propertyName': 'INSEE municipality code', 'propertyId': 'P374', 'value': '75056'}, {'propertyName': 'GND ID', 'propertyId': 'P227', 'value': '4044660-8'}, {'propertyName': 'NDL Auth ID', 'propertyId': 'P349', 'value': '00629026'}, {'propertyName': 'flag', 'propertyId': 'P163', 'value': 'Q659058'}, {'propertyName': 'Commons category', 'propertyId': 'P373', 'value': 'Paris'}, {'propertyName': 'OpenStreetMap Relation identifier', 'propertyId': 'P402', 'value': '71525'}, {'propertyName': 'ISO 3166-2 code', 'propertyId': 'P300', 'value': 'FR-75'}, {'propertyName': 'located in time zone', 'propertyId': 'P421', 'value': 'Q6655'}, {'propertyName': 'located in time zone', 'propertyId': 'P421', 'value': 'Q6723'}, {'propertyName': 'ISNI', 'propertyId': 'P213', 'value': '0000 0001 2114 268X'}, {'propertyName': 'coordinate location', 'propertyId': 'P625', 'value': {'latitude': 48.856577777778, 'longitude': 2.3518277777778, 'altitude': None, 'precision': 2.7777777777778e-06, 'globe': 'http://www.wikidata.org/entity/Q2'}}, {'propertyName': 'inception', 'propertyId': 'P571', 'value': {'time': '-0300-00-00T00:00:00Z', 'timezone': 0, 'before': 0, 'after': 0, 'precision': 9, 'calendarmodel': 'http://www.wikidata.org/entity/Q1985786'}}, {'propertyName': 'award received', 'propertyId': 'P166', 'value': 'Q2727598'}, {'propertyName': 'award received', 'propertyId': 'P166', 'value': 'Q2990283'}, {'propertyName': 'award received', 'propertyId': 'P166', 'value': 'Q163700'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q12543'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q12761'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q12788'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q241021'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q253721'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q234728'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q135265'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q172455'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q189153'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q193929'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q234743'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q48958'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q166640'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q201982'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q208889'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q160506'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q205632'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q209086'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q175999'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q256004'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q208943'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q193370'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q18102'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q193819'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q193899'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q212274'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q609134'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q274327'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q212793'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q193877'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q135104'}, {'propertyName': 'shares border with', 'propertyId': 'P47', 'value': 'Q640102'}, {'propertyName': 'official website', 'propertyId': 'P856', 'value': 'http://www.paris.fr/'}, {'propertyName': "topic's main category", 'propertyId': 'P910', 'value': 'Q5626403'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q2851133'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q256294'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q1685859'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q2105'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q959708'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q289303'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q677730'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q601266'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q1684642'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q1685102'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q1986521'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q3131449'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q2596877'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q656015'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q947901'}, {'propertyName': 'head of government', 'propertyId': 'P6', 'value': 'Q1685301'}, {'propertyName': 'named after', 'propertyId': 'P138', 'value': 'Q656902'}, {'propertyName': 'sister city', 'propertyId': 'P190', 'value': 'Q220'}, {'propertyName': 'page banner', 'propertyId': 'P948', 'value': 'Paris banner.jpg'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'DMOZ ID', 'propertyId': 'P998', 'value': 'Regional/Europe/France/Regions/Ile-de-France/Paris/'}, {'propertyName': 'MusicBrainz area ID', 'propertyId': 'P982', 'value': 'dc10c22b-e510-4006-8b7f-fecb4f36436e'}, {'propertyName': 'Freebase ID', 'propertyId': 'P646', 'value': '/m/05qtj'}, {'propertyName': 'coordinate of northernmost point', 'propertyId': 'P1332', 'value': {'latitude': 48.902156, 'longitude': 2.3844292, 'altitude': None, 'precision': 0.0001, 'globe': 'http://www.wikidata.org/entity/Q2'}}, {'propertyName': 'coordinate of southernmost point', 'propertyId': 'P1333', 'value': {'latitude': 48.8155755, 'longitude': 2.3444967, 'altitude': None, 'precision': 0.0001, 'globe': 'http://www.wikidata.org/entity/Q2'}}, {'propertyName': 'coordinate of westernmost point', 'propertyId': 'P1335', 'value': {'latitude': 48.854199, 'longitude': 2.224122, 'altitude': None, 'precision': 0.0001, 'globe': 'http://www.wikidata.org/entity/Q2'}}, {'propertyName': 'coordinate of easternmost point', 'propertyId': 'P1334', 'value': {'latitude': 48.8363848, 'longitude': 2.4697602, 'altitude': None, 'precision': 0.0001, 'globe': 'http://www.wikidata.org/entity/Q2'}}, {'propertyName': 'Gran Enciclopèdia Catalana ID', 'propertyId': 'P1296', 'value': '0049060'}, {'propertyName': 'category for people who died here', 'propertyId': 'P1465', 'value': 'Q9846779'}, {'propertyName': 'GeoNames ID', 'propertyId': 'P1566', 'value': '2968815'}, {'propertyName': 'GeoNames ID', 'propertyId': 'P1566', 'value': '2968815'}, {'propertyName': 'category for films shot at this location', 'propertyId': 'P1740', 'value': 'Q8458184'}, {'propertyName': 'place name sign', 'propertyId': 'P1766', 'value': 'Paris (town sign).jpg'}, {'propertyName': 'category of associated people', 'propertyId': 'P1792', 'value': 'Q8964470'}, {'propertyName': 'official name', 'propertyId': 'P1448', 'value': {'text': 'Paris', 'language': 'fr'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'population', 'propertyId': 'P1082', 'value': {'amount': '+2240621', 'unit': '1', 'upperBound': '+2285434', 'lowerBound': '+2195808'}}, {'propertyName': 'postal code', 'propertyId': 'P281', 'value': '75001–75020'}, {'propertyName': 'postal code', 'propertyId': 'P281', 'value': '75001–75020'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q142'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q1110'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q13917'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q70972'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q71092'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q106577'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q207162'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q212429'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q1142326'}, {'propertyName': 'capital of', 'propertyId': 'P1376', 'value': 'Q16665915'}, {'propertyName': 'NUTS code', 'propertyId': 'P605', 'value': 'FR101'}, {'propertyName': 'replaces', 'propertyId': 'P1365', 'value': 'Q270273'}, {'propertyName': 'replaces', 'propertyId': 'P1365', 'value': 'Q1142326'}, {'propertyName': 'Twitter username', 'propertyId': 'P2002', 'value': 'Paris'}, {'propertyName': 'Facebook profile ID', 'propertyId': 'P2013', 'value': 'paris'}, {'propertyName': 'area', 'propertyId': 'P2046', 'value': {'amount': '+105.4', 'unit': 'http://www.wikidata.org/entity/Q712226'}}, {'propertyName': 'described by source', 'propertyId': 'P1343', 'value': 'Q4173137'}, {'propertyName': 'described by source', 'propertyId': 'P1343', 'value': 'Q19180675'}, {'propertyName': 'described by source', 'propertyId': 'P1343', 'value': 'Q602358'}, {'propertyName': 'described by source', 'propertyId': 'P1343', 'value': 'Q2041543'}, {'propertyName': 'FAST ID', 'propertyId': 'P2163', 'value': '1205283'}, {'propertyName': 'GNS Unique Feature ID', 'propertyId': 'P2326', 'value': '-1456928'}, {'propertyName': 'list of monuments', 'propertyId': 'P1456', 'value': 'Q1403319'}, {'propertyName': 'list of monuments', 'propertyId': 'P1456', 'value': 'Q3252156'}, {'propertyName': 'Commons gallery', 'propertyId': 'P935', 'value': 'Paris'}, {'propertyName': 'Facebook Places ID', 'propertyId': 'P1997', 'value': '110774245616525'}, {'propertyName': 'diocese', 'propertyId': 'P708', 'value': 'Q1242250'}, {'propertyName': 'Encyclopædia Britannica Online ID', 'propertyId': 'P1417', 'value': 'place/Paris'}, {'propertyName': 'currency', 'propertyId': 'P38', 'value': 'Q4916'}, {'propertyName': 'patron saint', 'propertyId': 'P417', 'value': 'Q235863'}, {'propertyName': 'continent', 'propertyId': 'P30', 'value': 'Q46'}, {'propertyName': 'highest point', 'propertyId': 'P610', 'value': 'Q1440664'}, {'propertyName': 'foods traditionally associated', 'propertyId': 'P868', 'value': 'Q21129738'}, {'propertyName': 'demonym', 'propertyId': 'P1549', 'value': {'text': 'Parisien', 'language': 'fr'}}, {'propertyName': 'demonym', 'propertyId': 'P1549', 'value': {'text': 'Parisien', 'language': 'fr'}}, {'propertyName': 'demonym', 'propertyId': 'P1549', 'value': {'text': 'Parisien', 'language': 'fr'}}, {'propertyName': 'INSEE department code', 'propertyId': 'P2586', 'value': '75'}, {'propertyName': 'located next to body of water', 'propertyId': 'P206', 'value': 'Q1471'}, {'propertyName': 'elevation above sea level', 'propertyId': 'P2044', 'value': {'amount': '+28', 'unit': 'http://www.wikidata.org/entity/Q11573', 'upperBound': '+29', 'lowerBound': '+27'}}, {'propertyName': 'permanent duplicated item', 'propertyId': 'P2959', 'value': 'Q20514743'}, {'propertyName': "topic's main template", 'propertyId': 'P1424', 'value': 'Q18220037'}, {'propertyName': 'local dialing code', 'propertyId': 'P473', 'value': '1'}, {'propertyName': 'part of', 'propertyId': 'P361', 'value': 'Q16665915'}, {'propertyName': 'nickname', 'propertyId': 'P1449', 'value': {'text': 'Ville-Lumière', 'language': 'fr'}}, {'propertyName': 'nickname', 'propertyId': 'P1449', 'value': {'text': 'Ville-Lumière', 'language': 'fr'}}, {'propertyName': 'Encyclopædia Universalis Online ID', 'propertyId': 'P3219', 'value': 'paris'}, {'propertyName': 'Guardian topic ID', 'propertyId': 'P3106', 'value': 'world/paris'}, {'propertyName': 'IATA airport code', 'propertyId': 'P238', 'value': 'PAR'}, {'propertyName': 'NE.se ID', 'propertyId': 'P3222', 'value': 'paris'}, {'propertyName': 'NE.se ID', 'propertyId': 'P3222', 'value': 'paris'}, {'propertyName': 'Quora topic ID', 'propertyId': 'P3417', 'value': 'Paris'}, {'propertyName': 'MeSH ID', 'propertyId': 'P486', 'value': 'D010297'}, {'propertyName': 'Ringgold ID', 'propertyId': 'P3500', 'value': '55653'}, {'propertyName': 'Nomisma ID', 'propertyId': 'P2950', 'value': 'paris'}, {'propertyName': 'nighttime view', 'propertyId': 'P3451', 'value': 'Eiffel Tower from the Tour Montparnasse, 1 May 2012 N2.jpg'}, {'propertyName': 'catalog', 'propertyId': 'P972', 'value': 'Q5460604'}, {'propertyName': 'subreddit', 'propertyId': 'P3984', 'value': 'paris'}, {'propertyName': 'YSO ID', 'propertyId': 'P2347', 'value': '104996'}, {'propertyName': 'Instagram location ID', 'propertyId': 'P4173', 'value': '6889842'}, {'propertyName': 'history of topic', 'propertyId': 'P2184', 'value': 'Q845625'}, {'propertyName': 'pronunciation audio', 'propertyId': 'P443', 'value': 'Fr-Paris.ogg'}, {'propertyName': 'flag image', 'propertyId': 'P41', 'value': 'Flag of Paris with coat of arms.svg'}, {'propertyName': 'National Archives Identifier', 'propertyId': 'P1225', 'value': '10045153'}])
 ```
 
-It is possible to filter other identifiers to get a more readable output, for example, 
-if you only searched for identifiers from the Library of Congress (P244) and VIAF (P214)
+It is possible to filter other identifiers to get a more readable output. For example, 
+if you want to filter on the Library of Congress (P244) and VIAF's identifiers (P214),
 specify `True` in the `extra_info` parameter and define a list that contains properties 
 in the `filter_statements` parameter in the component configuration:
 
@@ -162,7 +162,7 @@ for ent in doc_fr.ents:
 ('Erwin Rommel', 'PER', 'Q14060', 'https://www.wikidata.org/wiki/Q14060')
 ```
 
-To consult the languages available in Entity-Fishing follow this [link](https://nerd.readthedocs.io/en/latest/restAPI.html#supported-languages).
+All languages available with Entity-Fishing are documented [here](https://nerd.readthedocs.io/en/latest/restAPI.html#supported-languages).
 
 ### Get information about Entity fishing API response
 
@@ -190,7 +190,7 @@ doc._.annotations
  }
 ```
 
-To access to query metadata for the response by Entity-Fishing API:
+The Entity-Fishing API response for a metadata query can be accessed as such:
 
 ```
 doc._.metadata
@@ -202,11 +202,11 @@ doc._.metadata
 ## Configuration parameters
 
 ```
-- api_ef_base          : URL of the Entity-Fishing API endpoint. Defaults to Huma-Num server.
+- api_ef_base          : URL of the Entity-Fishing API endpoint. Default endpoint is set to Huma-Num server.
 - language             : Specify language of KB ressources for Entity-Fishing API. Defaults to "en".
-- extra_info           : Get extra Wikidata informations about entity from service "concept look-up" 
+- extra_info           : Get extra Wikidata information about an entity from service "concept look-up" 
                          of Entity-Fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
-- filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...] .Defaults to empty list.  
+- filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...]. Defaults to an empty list.  
 ```
 
 ## Attributes
@@ -214,8 +214,8 @@ doc._.metadata
 * **Doc** extensions:
 
     ```
-   doc._.annotations :  Raw response from Entity-Fishing API.
-   doc._.metadata    :  Raw information about request and response from Entity-Fishing API.
+   doc._.annotations :  Entity-Fishing API's raw response.
+   doc._.metadata    :  Raw information about request and response from the Entity-Fishing API.
    ```
 
 * **Span** extensions:
@@ -226,19 +226,19 @@ doc._.metadata
   
    span._.kb_qid             : Wikidata identifier (QID).
    span._.url_wikidata       : URL to Wikidata ressource.
-   span._.wikipedia_page_ref : Identifier of the concept in Wikipedia.
+   span._.wikipedia_page_ref : Identifier of the Wikipedia concept.
    span._.nerd_score         : Selection confidence score for the disambiguated entity.
   
-   extra extensions (if `extra_info` set to True)
+   extra extensions (if `extra_info` set to `True`)
    ----------------------------------------------
    
-   span._.description     : Short Wikipedia definition of the concept.
-   span._.src_description : The name of Wikipedia KB from which the definition comes from (eg. wikipedia-en).
+   span._.description     : Short concept definition from Wikipedia.
+   span._.src_description : The name of the Wikipedia KB from which the definition comes from (eg. wikipedia-en).
    span._.normal_term     : The normalised term name.
-   span._.other_ids       : Others statements in KB relates to Wikipedia concept.
+   span._.other_ids       : Other statements in the KB related to a Wikipedia concept.
    ```
 
-For details on Entity-Fishing response, follow this [link](https://nerd.readthedocs.io/en/latest/restAPI.html#response)
+For more details on Entity-Fishing responses, follow this [link](https://nerd.readthedocs.io/en/latest/restAPI.html#response)
 
 ## Recommendations
 
@@ -248,13 +248,13 @@ If Entity-fishing is deployed locally or on specific server, specify the URL of 
 nlp.add_pipe("entityfishing", config={"api_ef_base": "<api-endpoint>"})
 ```
 
-This can be useful, if you work with more recent dumps of Wikidata knowledge base or increase speed in the pipeline.
+This can be useful if you work with more recent dumps of Wikidata knowledge base or if you want to speed up the pipeline.
 
 To install your own instance of Entity-Fishing, follow this [link](https://nerd.readthedocs.io/en/latest/build.html).
 
 ## Visualise results
 
-To visualise the named entities and their wikidata links, use the manual option of displaCy:
+For visualizing the named entities and their wikidata links, use the manual option of displaCy:
 
 ```Python
 import spacy 
@@ -283,7 +283,7 @@ spacy.displacy.serve(params, style="ent", manual=True, options=options)
 
 <img src="./docs/vizualizer.png" alt="vizualizer" width="1050" height="80"/>
 
-The visualizer is serving on http://0.0.0.0:5000
+The visualizer is available on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
 ## External ressources
 
@@ -295,8 +295,8 @@ The visualizer is serving on http://0.0.0.0:5000
 - [Entity-Fishing web client](http://nerd.huma-num.fr/nerd/)
 - [Entity-Fishing documentation](https://nerd.readthedocs.io/en/latest/)
 
-## Details
+## About
 
-This component is experimental, it may be used for research, and it may evolve in the future.
+This component is experimental. It may be used for research, and it may evolve in the future.
 
 Entity-Fishing is tool created by Patrice Lopez (SCIENCE-MINER), with contributions of Inria Paris, and distributed under Apache 2.0 license. 
