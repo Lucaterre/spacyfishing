@@ -283,7 +283,7 @@ spacy.displacy.serve(params, style="ent", manual=True, options=options)
 
 <img src="./docs/vizualizer.png" alt="vizualizer" width="1050" height="80"/>
 
-The visualizer is available on [http://0.0.0.0:5000](http://0.0.0.0:5000).
+The visualizer is available on port 5000.
 
 ## External ressources
 
@@ -300,3 +300,5 @@ The visualizer is available on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 This component is experimental. It may be used for research, and it may evolve in the future.
 
 Entity-Fishing is tool created by Patrice Lopez (SCIENCE-MINER), with contributions of Inria Paris, and distributed under Apache 2.0 license. 
+
+Special thanks to [@HugoSchtr](https://github.com/HugoSchtr) for documentation review.
