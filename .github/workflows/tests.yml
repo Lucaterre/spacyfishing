@@ -22,7 +22,7 @@ jobs:
         architecture: x64
     - run: | 
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements_dev.txt; fi
     - run: |
           find ./spacyfishing/ -name '*.py' -exec pylint --rcfile=./.pylintrc {} \;
     - run: |
