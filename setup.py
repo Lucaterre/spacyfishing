@@ -8,6 +8,8 @@ spacyfishing_version = subprocess.run(['git', 'describe', '--tags'], stdout=subp
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open("requirements.txt", encoding="utf-8") as f:
+    install_requires = f.read().splitlines()
 
 CLASSIFIERS = [
         "License :: OSI Approved :: MIT License",
@@ -30,8 +32,8 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Lucaterre/spacyfishing",
-    install_requires=['spacy>=3.3.1', 'requests>=2.28.0'],
-    packages=find_packages("spacyfishing"),
+    install_requires=install_requires,
+    packages=find_packages(),
     classifiers=CLASSIFIERS,
     python_requires='>=3.8',
     entry_points={

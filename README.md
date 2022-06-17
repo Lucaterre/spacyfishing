@@ -40,7 +40,7 @@ pip install spacyfishing
 git clone https://github.com/Lucaterre/spacyfishing.git
 virtualenv --python=/usr/bin/python3.8 venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements_dev.txt
 ```
 
 ## Usage
