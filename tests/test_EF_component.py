@@ -55,9 +55,7 @@ class TestEfSpacyNormalConfig(unittest.TestCase):
         nlp.add_pipe("entityfishing", config={"api_ef_base": "http://www.badurl.com"})
         doc = nlp(self.text_example)
         self.assertEqual(doc._.metadata["disambiguation_text_service"]["ok"], False)
-        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["ok"], False)
         self.assertEqual(doc._.metadata["disambiguation_text_service"]["status_code"], 404)
-        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["status_code"], 404)
         self.assertEqual(len(doc._.annotations), 0)
 
     def test_bad_language_ef_client(self):

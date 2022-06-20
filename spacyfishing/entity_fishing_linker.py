@@ -364,7 +364,23 @@ class EntityFishing:
         # Pass them back in Entity-fishing without the text but with all
         # the named entities surrounding these entities, to create a context
         # of neighboring terms.
-        nil_clustering = [ent for ent in doc.ents if ent._.kb_qid is None]
+        # nil_clustering = named entities in doc - actual disambiguated entities by EF
+        nil_clustering = []
+        if len(result_from_ef_text[0]) > 0:
+            try:
+                nil_clustering = [
+                    doc[ent[1]:ent[2]] for ent in [
+                        (
+                            ent.text, ent.start, ent.end
+                        ) for ent in doc.ents
+                    ] if ent not in [
+                        (
+                            ent_ef['rawName'], ent_ef['offsetStart'], ent_ef['offsetEnd']
+                        ) for ent_ef in result_from_ef_text[0]['entities']
+                    ]
+                ]
+            except KeyError:
+                pass
         entities_from_terms = []
         if len(nil_clustering) != 0:
             # prepare query for Entity-Fishing terms disambiguation

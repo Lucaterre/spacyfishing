@@ -173,166 +173,203 @@ doc._.annotations
 ```
 ```
 {
-    "disambiguation_text_service": {
-        "runtime": 26,
-        "nbest": false,
-        "text": "La bataille d'El-Alamein en \u00c9gypte oppose la 8e arm\u00e9e britannique dirig\u00e9e par Bernard Montgomery aux divisions d'Erwin Rommel.",
-        "language": {
-            "lang": "fr",
-            "conf": 0.0
-        },
-        "global_categories": [
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "G\u00e9n\u00e9ral allemand",
-                "page_id": 94081
-            },
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "Chevalier grand-croix de l'ordre du Bain",
-                "page_id": 3399090
-            },
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "Naissance \u00e0 Heidenheim an der Brenz",
-                "page_id": 8396804
-            }
-        ],
-        "entities": [
-            {
-                "rawName": "bataille d'El-Alamein",
-                "offsetStart": 1,
-                "offsetEnd": 6,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9198,
-                "wikipediaExternalRef": 261761,
-                "wikidataId": "Q153376",
-                "domains": [
-                    "Military"
-                ]
-            },
-            {
-                "rawName": "\u00c9gypte",
-                "offsetStart": 7,
-                "offsetEnd": 8,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.6437,
-                "wikipediaExternalRef": 4011,
-                "wikidataId": "Q79",
-                "domains": [
-                    "Geology"
-                ]
-            },
-            {
-                "rawName": "Bernard Montgomery",
-                "offsetStart": 15,
-                "offsetEnd": 17,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9965,
-                "wikipediaExternalRef": 46225,
-                "wikidataId": "Q152025",
-                "domains": [
-                    "Biology",
-                    "Military"
-                ]
-            },
-            {
-                "rawName": "Erwin Rommel",
-                "offsetStart": 20,
-                "offsetEnd": 22,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9955,
-                "wikipediaExternalRef": 46221,
-                "wikidataId": "Q14060",
-                "domains": [
-                    "Military"
-                ]
-            }
-        ]
+  "disambiguation_text_service": {
+    "runtime": 66,
+    "nbest": false,
+    "text": "Austria invaded and fought the Serbian army at the Battle of Cer and \n        Battle of Kolubara beginning on 12 August. \n\nThe army, led by general Paul von Hindenburg \n        defeated Russia in a series of battles collectively known as the First Battle of Tannenberg \n        (17 August – 2 September). But the failed Russian invasion, causing the fresh German troops to move to the east, \n        allowed the tactical Allied victory at the First Battle of the Marne.",
+    "language": {
+      "lang": "en",
+      "conf": 0.0
     },
-    "disambiguation_terms_service": {
-        "runtime": 13,
-        "nbest": false,
-        "shortText": "bataille d'El-Alamein \u00c9gypte Bernard Montgomery Erwin Rommel",
-        "language": {
-            "lang": "fr",
-            "conf": 0.0
-        },
-        "global_categories": [
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "G\u00e9n\u00e9ral allemand",
-                "page_id": 94081
-            },
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "Chevalier grand-croix de l'ordre du Bain",
-                "page_id": 3399090
-            },
-            {
-                "weight": 0.01960784313725492,
-                "source": "wikipedia-fr",
-                "category": "Naissance \u00e0 Heidenheim an der Brenz",
-                "page_id": 8396804
-            }
-        ],
-        "entities": [
-            {
-                "rawName": "bataille d'El-Alamein",
-                "offsetStart": 1,
-                "offsetEnd": 6,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9198,
-                "wikipediaExternalRef": 261761,
-                "wikidataId": "Q153376",
-                "domains": [
-                    "Military"
-                ]
-            },
-            {
-                "rawName": "\u00c9gypte",
-                "offsetStart": 7,
-                "offsetEnd": 8,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.6437,
-                "wikipediaExternalRef": 4011,
-                "wikidataId": "Q79",
-                "domains": [
-                    "Geology"
-                ]
-            },
-            {
-                "rawName": "Bernard Montgomery",
-                "offsetStart": 15,
-                "offsetEnd": 17,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9965,
-                "wikipediaExternalRef": 46225,
-                "wikidataId": "Q152025",
-                "domains": [
-                    "Biology",
-                    "Military"
-                ]
-            },
-            {
-                "rawName": "Erwin Rommel",
-                "offsetStart": 20,
-                "offsetEnd": 22,
-                "nerd_score": 1,
-                "nerd_selection_score": 0.9955,
-                "wikipediaExternalRef": 46221,
-                "wikidataId": "Q14060",
-                "domains": [
-                    "Military"
-                ]
-            }
+    "global_categories": [
+      {
+        "weight": 0.009023224816293564,
+        "source": "wikipedia-en",
+        "category": "German military personnel of World War I",
+        "page_id": 10186142
+      },
+      {
+        "weight": 0.009023224816293564,
+        "source": "wikipedia-en",
+        "category": "Grand Crosses of the Military Order of St. Henry",
+        "page_id": 31717093
+      },
+      {
+        "weight": 0.009023224816293564,
+        "source": "wikipedia-en",
+        "category": "Recipients of the Military Merit Cross (Mecklenburg-Schwerin), 1st class",
+        "page_id": 39385183
+      }
+    ],
+    "entities": [
+      {
+        "rawName": "Austria",
+        "offsetStart": 0,
+        "offsetEnd": 1,
+        "nerd_score": 0.995,
+        "nerd_selection_score": 0.3592,
+        "wikipediaExternalRef": 26964606,
+        "wikidataId": "Q40",
+        "domains": [
+          "Atomic_Physic",
+          "Engineering",
+          "Administration",
+          "Geology",
+          "Oceanography",
+          "Earth"
         ]
-    }
+      },
+      {
+        "rawName": "Serbian",
+        "offsetStart": 5,
+        "offsetEnd": 6,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.4361,
+        "wikipediaExternalRef": 75595,
+        "wikidataId": "Q9299",
+        "domains": [
+          "Biology",
+          "Sociology",
+          "Geology",
+          "Pedagogy"
+        ]
+      },
+      {
+        "rawName": "Kolubara",
+        "offsetStart": 16,
+        "offsetEnd": 17,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.4694,
+        "wikipediaExternalRef": 2167279,
+        "wikidataId": "Q682699",
+        "domains": [
+          "Military"
+        ]
+      },
+      {
+        "rawName": "12 August",
+        "offsetStart": 19,
+        "offsetEnd": 21,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.4162,
+        "wikipediaExternalRef": 1491,
+        "wikidataId": "Q2777",
+        "domains": [
+          "Biology",
+          "Psychiatry",
+          "Health",
+          "Physics"
+        ]
+      },
+      {
+        "rawName": "Paul von Hindenburg",
+        "offsetStart": 29,
+        "offsetEnd": 32,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.9742,
+        "wikipediaExternalRef": 40548,
+        "wikidataId": "Q2667",
+        "domains": [
+          "Medicine"
+        ]
+      },
+      {
+        "rawName": "Russia",
+        "offsetStart": 34,
+        "offsetEnd": 35,
+        "nerd_score": 0.995,
+        "nerd_selection_score": 0.3638,
+        "wikipediaExternalRef": 25391,
+        "wikidataId": "Q159",
+        "domains": [
+          "Administration",
+          "Geology",
+          "Economy"
+        ]
+      },
+      {
+        "rawName": "Tannenberg",
+        "offsetStart": 47,
+        "offsetEnd": 48,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.4974,
+        "wikipediaExternalRef": 60142,
+        "wikidataId": "Q153858",
+        "domains": [
+          "Administration",
+          "Military"
+        ]
+      },
+      {
+        "rawName": "Allied",
+        "offsetStart": 78,
+        "offsetEnd": 79,
+        "nerd_score": 1,
+        "nerd_selection_score": 0.3765,
+        "wikipediaExternalRef": 2198871,
+        "wikidataId": "Q215669",
+        "domains": [
+          "Administration",
+          "Military"
+        ]
+      }
+    ]
+  },
+  "disambiguation_terms_service": {
+    "runtime": 27,
+    "nbest": false,
+    "shortText": "Austria Serbian the Battle of Cer Kolubara 12 August Paul von Hindenburg Russia Tannenberg 17 August – 2 September Russian German Allied the First Battle of the Marne",
+    "language": {
+      "lang": "en",
+      "conf": 0.0
+    },
+    "global_categories": [
+      {
+        "weight": 0.030319253635147377,
+        "source": "wikipedia-en",
+        "category": "Languages of Finland",
+        "page_id": 912139
+      },
+      {
+        "weight": 0.030319253635147377,
+        "source": "wikipedia-en",
+        "category": "Languages of Armenia",
+        "page_id": 946952
+      },
+      {
+        "weight": 0.030319253635147377,
+        "source": "wikipedia-en",
+        "category": "Languages of Georgia (country)",
+        "page_id": 8434566
+      }
+    ],
+    "entities": [
+      {
+        "rawName": "Russian",
+        "offsetStart": 60,
+        "offsetEnd": 61,
+        "nerd_score": 0.8653,
+        "nerd_selection_score": 0.1155,
+        "wikipediaExternalRef": 25431,
+        "wikidataId": "Q7737",
+        "domains": [
+          "Sociology"
+        ]
+      },
+      {
+        "rawName": "German",
+        "offsetStart": 66,
+        "offsetEnd": 67,
+        "nerd_score": 0.05,
+        "nerd_selection_score": 0.1183,
+        "wikipediaExternalRef": 11867,
+        "wikidataId": "Q183",
+        "domains": [
+          "Administration"
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -343,18 +380,18 @@ doc._.metadata
 ```
 ```
 {
-    "disambiguation_text_service": {
-        "status_code": 200,
-        "reason": "OK",
-        "ok": true,
-        "encoding": "utf-8"
-    },
-    "disambiguation_terms_service": {
-        "status_code": 200,
-        "reason": "OK",
-        "ok": true,
-        "encoding": "utf-8"
-    }
+  "disambiguation_text_service": {
+    "status_code": 200,
+    "reason": "OK",
+    "ok": true,
+    "encoding": "utf-8"
+  },
+  "disambiguation_terms_service": {
+    "status_code": 200,
+    "reason": "OK",
+    "ok": true,
+    "encoding": "utf-8"
+  }
 }
 ```
 
