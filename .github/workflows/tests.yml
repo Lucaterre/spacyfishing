@@ -26,4 +26,5 @@ jobs:
     - run: |
           find ./spacyfishing/ -name '*.py' -exec pylint --rcfile=./.pylintrc {} \;
     - run: |
-          pytest ./tests/*.py
+          pytest ./tests/*.py -p no:warnings
+

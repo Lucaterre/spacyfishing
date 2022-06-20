@@ -45,31 +45,35 @@ class TestEfSpacyNormalConfig(unittest.TestCase):
         nlp = spacy.load(self.model_name)
         nlp.add_pipe("entityfishing")
         doc = nlp(self.text_example)
-        self.assertEqual(doc._.metadata["ok"], True)
-        self.assertEqual(doc._.metadata["status_code"], 200)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["ok"], True)
+        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["ok"], True)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["status_code"], 200)
+        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["status_code"], 200)
 
     def test_bad_property_ef_client(self):
         nlp = spacy.load(self.model_name)
         nlp.add_pipe("entityfishing", config={"api_ef_base": "http://www.badurl.com"})
         doc = nlp(self.text_example)
-        self.assertEqual(doc._.metadata["ok"], False)
-        self.assertEqual(doc._.metadata["status_code"], 404)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["ok"], False)
+        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["ok"], False)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["status_code"], 404)
+        self.assertEqual(doc._.metadata["disambiguation_terms_service"]["status_code"], 404)
         self.assertEqual(len(doc._.annotations), 0)
 
     def test_bad_language_ef_client(self):
         nlp = spacy.load(self.model_name)
         nlp.add_pipe("entityfishing", config={"language": "def"})
         doc = nlp(self.text_example)
-        self.assertEqual(doc._.metadata["ok"], False)
-        self.assertEqual(doc._.metadata["status_code"], 406)
-        self.assertEqual(doc._.annotations["message"], "The language specified is not supported or not valid. ")
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["ok"], False)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["status_code"], 406)
+        self.assertEqual(doc._.annotations["disambiguation_text_service"]["message"], "The language specified is not supported or not valid. ")
 
     def test_bad_text_ef_client(self):
         nlp = spacy.load(self.model_name)
         nlp.add_pipe("entityfishing")
         doc = nlp(self.text_too_short)
-        self.assertEqual(doc._.metadata["ok"], False)
-        self.assertEqual(doc._.metadata["status_code"], 400)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["ok"], False)
+        self.assertEqual(doc._.metadata["disambiguation_text_service"]["status_code"], 400)
         self.assertEqual(doc._.annotations, {})
 
 

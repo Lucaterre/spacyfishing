@@ -7,6 +7,7 @@ as disambiguation and entity linking component.
 """
 
 import logging
+from typing import Tuple
 
 import requests
 
@@ -23,6 +24,7 @@ from spacy.tokens import Doc, Span
 })
 class EntityFishing:
     """EntityFishing component for spaCy pipeline."""
+
     def __init__(self,
                  nlp: Language,
                  name: str,
@@ -41,7 +43,7 @@ class EntityFishing:
             api_ef_base (str): describes url of the entity-fishing API used.
             language (str): matches the language of the resources to
             be disambiguated (matches the language model for the NER task).
-            extra_info (bool): attach extra informations to spans as normalised term,
+            extra_info (bool): attach extra information to spans as normalised term,
             description, others knowledge base ids.
             filter_statements (list): filter others KB ids
             that relies on QID  eg. ['P214', 'P244'].
@@ -67,8 +69,8 @@ class EntityFishing:
         self.verbose = verbose
 
         # Set doc extensions to attaches raw response from Entity-Fishing API to doc
-        Doc.set_extension("annotations", default=None, force=True)
-        Doc.set_extension("metadata", default=None, force=True)
+        Doc.set_extension("annotations", default={}, force=True)
+        Doc.set_extension("metadata", default={}, force=True)
 
         # Set spans extensions to enhance spans with new information
         # come from Wikidata knowledge base.
@@ -131,7 +133,7 @@ class EntityFishing:
         # cf. https://nerd.readthedocs.io/en/latest/restAPI.html#response-status-codes
         if response.status_code == 400:
             client_log("Wrong request, missing parameters, "
-                       "missing header, text too short (> 5 chars). (400)")
+                       "missing header, text too short (<= 5 characters). (400)")
         elif response.status_code == 500:
             client_log("Entity-Fishing API service seems broken. (500)")
         elif response.status_code == 404:
@@ -140,6 +142,96 @@ class EntityFishing:
             client_log("Language is not supported by Entity-Fishing. (406)")
 
         return response
+
+    @staticmethod
+    def process_response(response: requests.models.Response) -> Tuple[dict, dict]:
+        """decode response in JSON format and
+        retrieve metadata information.
+
+        Parameters:
+            response (requests.models.Response): response from Entity-Fishing
+            service.
+
+        Returns:
+            res_json (dict): response format in JSON.
+            metadata (dict): HTTP information about request.
+        """
+
+        try:
+            res_json = response.json()
+        except requests.exceptions.JSONDecodeError:
+            res_json = {}
+
+        metadata = {
+            "status_code": response.status_code,
+            "reason": response.reason,
+            "ok": response.ok,
+            "encoding": response.encoding
+        }
+
+        return res_json, metadata
+
+    @staticmethod
+    def prepare_data(text: str, terms: str, entities: list, language: dict) -> dict:
+        """Preprocess data before call Entity-Fishing service.
+
+        Parameters:
+            text (str): Text to disambiguate.
+            terms (str): Sequence of terms to disambiguate
+            e.g. "ONU Barack Obama president ...".
+            entities (list): Specific entities to disambiguate.
+            language (dict): Type of language.
+
+        Returns:
+            dict (dict): data ready to send.
+        """
+        return {
+            "query": str({
+                "text": text,
+                "shortText": terms,
+                "language": language,
+                "entities": [
+                    {
+                        "rawName": ent.text,
+                        "offsetStart": ent.start,
+                        "offsetEnd": ent.end,
+                    } for ent in entities
+                ],
+                "mentions": [],
+                "customisation": "generic"
+            })
+        }
+
+    def updated_entities(self, doc: Doc, response: list) -> None:
+        """Attach to span default information: wikidata QID,
+           wikidata url and ranking disambiguation score.
+           Also, Attach to span extra information if flag is set
+           to `True`.
+
+        Parameters:
+            doc (Doc): spaCy doc object.
+            response (list): List that contains disambiguated entities in dict.
+        """
+        for entity in response:
+            span = doc[entity['offsetStart']:entity['offsetEnd']]
+            try:
+                span._.kb_qid = str(entity['wikidataId'])
+            except KeyError:
+                pass
+            try:
+                span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
+                # if flag + wikipediaextref => search extra infos
+                if self.flag_extra:
+                    self.look_extra_informations_on_entity(span)
+            except KeyError:
+                pass
+            try:
+                span._.nerd_score = entity['nerd_selection_score']
+            except KeyError:
+                pass
+            span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
+
+    # ~ Entity-fishing call service methods ~:
 
     def concept_look_up(self, wiki_id: str) -> requests.Response:
         """Service returns the knowledge base concept information from QID
@@ -171,96 +263,133 @@ class EntityFishing:
                                    files=files,
                                    verbose=self.verbose)
 
+    def look_extra_informations_on_entity(self, span: Span) -> None:
+        """Find and attach to span extra information:
+        normalised term name, description, description source,
+        others identifiers (statements attach to QID).
+
+        Parameters:
+            span (Span): spaCy span object where attach extra information.
+        """
+        req_desc = self.concept_look_up(span._.wikipedia_page_ref)
+        res_desc = req_desc.json()
+        # normalised term name
+        try:
+            span._.normal_term = res_desc['preferredTerm']
+        except KeyError:
+            pass
+        # description and source description (filter by language)
+        try:
+            span._.description = res_desc['definitions'][0]["definition"]
+            span._.src_description = res_desc['definitions'][0]["source"]
+        except KeyError:
+            pass
+        except IndexError:
+            pass
+        # others identifiers attach to QID
+        # in Wikidata KB with filter properties or not
+        try:
+            ids = []
+            for content in res_desc['statements']:
+                new_id = {
+                    k: content[k] for k in ['propertyName',
+                                            'propertyId',
+                                            'value']
+                }
+                if len(self.filter_statements) != 0:
+                    if content['propertyId'] in self.filter_statements:
+                        ids.append(new_id)
+                else:
+                    ids.append(new_id)
+
+            span._.other_ids = ids
+        except KeyError:
+            pass
+        except requests.exceptions.JSONDecodeError:
+            pass
+
+    def main_disambiguation_process(self,
+                                    text: str,
+                                    terms: str,
+                                    entities: list) -> Tuple[dict, dict, list]:
+        """Generic routine that describe the call
+        process of disambiguation service.
+        1. prepare query for disambiguation service
+        2. post query
+        3. process response
+
+        Parameters:
+            text (str): Text to disambiguate.
+            terms (str): Sequence of terms to disambiguate
+            e.g. "ONU Barack Obama president ...".
+            entities (list): Specific entities to disambiguate.
+
+        Returns:
+            res (dict): response from Entity-Fishing service.
+            metadata (dict): information about HTTP request on
+            Entity-Fishing service.
+            entities_enhanced (list): list of entities disambiguated by
+            Entity-Fishing.
+        """
+
+        data_to_post = self.prepare_data(text=text,
+                                         terms=terms,
+                                         entities=entities,
+                                         language=self.language)
+        req = self.disambiguate_text(files=data_to_post)
+        res, metadata = self.process_response(response=req)
+        try:
+            entities_enhanced = res['entities']
+        except KeyError:
+            entities_enhanced = []
+
+        return res, metadata, entities_enhanced
+
     def __call__(self, doc: Doc) -> Doc:
         """Attaches entities to spans (and doc)."""
+        # 1. Disambiguate and linking named entities in Doc object with Entity-Fishing
+        result_from_ef_text = self.main_disambiguation_process(text=doc.text,
+                                                               terms="",
+                                                               entities=doc.ents)
+        entities_from_text = result_from_ef_text[2]
 
-        # prepare query for Entity-Fishing disambiguation
-        data = {"query": str({
-            "text": doc.text,
-            "language": self.language,
-            "entities": [{
-                "rawName": ent.text,
-                "offsetStart": ent.start,
-                "offsetEnd": ent.end,
-            } for ent in doc.ents],
-            "mentions": ["ner", "wikipedia"] if len(doc.ents) == 0 else [],
-            "customisation": "generic"
-        })}
+        # 1a. Attach raw response (with text method in Entity-Fishing service) to doc
+        if len(result_from_ef_text[0]) > 0:
+            doc._.annotations["disambiguation_text_service"] = result_from_ef_text[0]
 
-        # Post query to Entity-Fishing disambiguation service
-        req = self.disambiguate_text(files=data)
+        doc._.metadata["disambiguation_text_service"] = result_from_ef_text[1]
 
-        try:
-            res = req.json()
-        except requests.exceptions.JSONDecodeError:
-            res = {}
+        # 2 .Because some named entities have not been disambiguated,
+        # create a list with these unrelated entities ("nil clustering").
+        # Pass them back in Entity-fishing without the text but with all
+        # the named entities surrounding these entities, to create a context
+        # of neighboring terms.
+        nil_clustering = [ent for ent in doc.ents if ent._.kb_qid is None]
+        entities_from_terms = []
+        if len(nil_clustering) != 0:
+            # prepare query for Entity-Fishing terms disambiguation
+            terms = " ".join([ent.text for ent in doc.ents])
+            result_from_ef_terms = self.main_disambiguation_process(text="",
+                                                                    terms=terms,
+                                                                    entities=nil_clustering)
 
-        # Attach raw response to doc
-        doc._.annotations = res
-        doc._.metadata = {
-            "status_code": req.status_code,
-            "reason": req.reason,
-            "ok": req.ok,
-            "encoding": req.encoding
-        }
+            entities_from_terms = result_from_ef_terms[2]
 
-        # Attach to span default information: wikidata QID,
-        # wikidata url and ranking disambiguation score
-        if res != {} and len(doc.ents) > 0 and req.status_code == 200:
+            # 2b. Attach raw response (with terms method in Entity-Fishing service) to doc
+            if len(result_from_ef_terms[0]) > 0:
+                doc._.annotations["disambiguation_terms_service"] = result_from_ef_terms[0]
+            doc._.metadata["disambiguation_terms_service"] = result_from_ef_terms[1]
+
+        # 3. Merge two list of entities (first and second pass in EF service)
+        # and attach information from Entity-Fishing to spans
+        result = entities_from_text + [
+            entity_term for entity_term in entities_from_terms
+            if entity_term not in entities_from_text
+        ] if len(entities_from_terms) > 0 else entities_from_text
+
+        if len(result) > 0:
             try:
-                for entity in res['entities']:
-                    try:
-                        span = doc[entity['offsetStart']:entity['offsetEnd']]
-                        span._.kb_qid = str(entity['wikidataId'])
-                        try:
-                            span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
-                        except KeyError:
-                            pass
-                        span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
-                        span._.nerd_score = entity['nerd_selection_score']
-                        # Attach to span extra information:  normalised term name, description,
-                        # description source, others identifiers (statements attach to QID)
-                        if self.flag_extra and span._.wikipedia_page_ref is not None:
-                            try:
-                                req_desc = self.concept_look_up(span._.wikipedia_page_ref)
-                                res_desc = req_desc.json()
-                                # normalised term name
-                                try:
-                                    span._.normal_term = res_desc['preferredTerm']
-                                except KeyError:
-                                    pass
-                                # description and source description (filter by language)
-                                try:
-                                    span._.description = res_desc['definitions'][0]["definition"]
-                                    span._.src_description = res_desc['definitions'][0]["source"]
-                                except KeyError:
-                                    pass
-                                # others identifiers attach to QID
-                                # in Wikidata KB with filter properties or not
-                                try:
-                                    if len(self.filter_statements) != 0:
-                                        ids = [
-                                            {
-                                                k: content[k] for k in ['propertyName',
-                                                                        'propertyId',
-                                                                        'value']
-                                             } for content in res_desc['statements']
-                                            if content['propertyId'] in self.filter_statements
-                                        ]
-                                    else:
-                                        ids = [
-                                            {
-                                                k: content[k] for k in ['propertyName',
-                                                                        'propertyId',
-                                                                        'value']
-                                             } for content in res_desc['statements']]
-                                    span._.other_ids = ids
-                                except KeyError:
-                                    pass
-                            except requests.exceptions.JSONDecodeError:
-                                pass
-                    except KeyError:
-                        pass
+                self.updated_entities(doc, result)
             except KeyError:
                 pass
 

@@ -172,22 +172,168 @@ The raw response of the Entity-fishing API can be accessed in the doc object:
 doc._.annotations
 ```
 ```
-{'runtime': 18, 
- 'nbest': False, 
- 'text': "La bataille d'El-Alamein en Égypte oppose la 8e armée britannique dirigée par Bernard Montgomery aux divisions d'Erwin Rommel.", 
- 'language': {'lang': 'fr', 'conf': 0.0}, 
- 'global_categories': [
-  {'weight': 0.01960784313725492, 'source': 'wikipedia-fr', 'category': 'Général allemand', 'page_id': 94081}, 
-  {'weight': 0.01960784313725492, 'source': 'wikipedia-fr', 'category': "Chevalier grand-croix de l'ordre du Bain", 'page_id': 3399090}, 
-  {'weight': 0.01960784313725492, 'source': 'wikipedia-fr', 'category': 'Naissance à Heidenheim an der Brenz', 'page_id': 8396804}
-  ], 
-  'entities': [
-  {'rawName': "bataille d'El-Alamein", 'offsetStart': 1, 'offsetEnd': 6, 'nerd_score': 1, 'nerd_selection_score': 0.9198, 'wikipediaExternalRef': 261761, 'wikidataId': 'Q153376', 'domains': ['Military']},
-  {'rawName': 'Égypte', 'offsetStart': 7, 'offsetEnd': 8, 'nerd_score': 1, 'nerd_selection_score': 0.6437, 'wikipediaExternalRef': 4011, 'wikidataId': 'Q79', 'domains': ['Geology']}, 
-  {'rawName': 'Bernard Montgomery', 'offsetStart': 15, 'offsetEnd': 17, 'nerd_score': 1, 'nerd_selection_score': 0.9965, 'wikipediaExternalRef': 46225, 'wikidataId': 'Q152025', 'domains': ['Biology', 'Military']}, 
-  {'rawName': 'Erwin Rommel', 'offsetStart': 20, 'offsetEnd': 22, 'nerd_score': 1, 'nerd_selection_score': 0.9955, 'wikipediaExternalRef': 46221, 'wikidataId': 'Q14060', 'domains': ['Military']}
-  ]
- }
+{
+    "disambiguation_text_service": {
+        "runtime": 26,
+        "nbest": false,
+        "text": "La bataille d'El-Alamein en \u00c9gypte oppose la 8e arm\u00e9e britannique dirig\u00e9e par Bernard Montgomery aux divisions d'Erwin Rommel.",
+        "language": {
+            "lang": "fr",
+            "conf": 0.0
+        },
+        "global_categories": [
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "G\u00e9n\u00e9ral allemand",
+                "page_id": 94081
+            },
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "Chevalier grand-croix de l'ordre du Bain",
+                "page_id": 3399090
+            },
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "Naissance \u00e0 Heidenheim an der Brenz",
+                "page_id": 8396804
+            }
+        ],
+        "entities": [
+            {
+                "rawName": "bataille d'El-Alamein",
+                "offsetStart": 1,
+                "offsetEnd": 6,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9198,
+                "wikipediaExternalRef": 261761,
+                "wikidataId": "Q153376",
+                "domains": [
+                    "Military"
+                ]
+            },
+            {
+                "rawName": "\u00c9gypte",
+                "offsetStart": 7,
+                "offsetEnd": 8,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.6437,
+                "wikipediaExternalRef": 4011,
+                "wikidataId": "Q79",
+                "domains": [
+                    "Geology"
+                ]
+            },
+            {
+                "rawName": "Bernard Montgomery",
+                "offsetStart": 15,
+                "offsetEnd": 17,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9965,
+                "wikipediaExternalRef": 46225,
+                "wikidataId": "Q152025",
+                "domains": [
+                    "Biology",
+                    "Military"
+                ]
+            },
+            {
+                "rawName": "Erwin Rommel",
+                "offsetStart": 20,
+                "offsetEnd": 22,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9955,
+                "wikipediaExternalRef": 46221,
+                "wikidataId": "Q14060",
+                "domains": [
+                    "Military"
+                ]
+            }
+        ]
+    },
+    "disambiguation_terms_service": {
+        "runtime": 13,
+        "nbest": false,
+        "shortText": "bataille d'El-Alamein \u00c9gypte Bernard Montgomery Erwin Rommel",
+        "language": {
+            "lang": "fr",
+            "conf": 0.0
+        },
+        "global_categories": [
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "G\u00e9n\u00e9ral allemand",
+                "page_id": 94081
+            },
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "Chevalier grand-croix de l'ordre du Bain",
+                "page_id": 3399090
+            },
+            {
+                "weight": 0.01960784313725492,
+                "source": "wikipedia-fr",
+                "category": "Naissance \u00e0 Heidenheim an der Brenz",
+                "page_id": 8396804
+            }
+        ],
+        "entities": [
+            {
+                "rawName": "bataille d'El-Alamein",
+                "offsetStart": 1,
+                "offsetEnd": 6,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9198,
+                "wikipediaExternalRef": 261761,
+                "wikidataId": "Q153376",
+                "domains": [
+                    "Military"
+                ]
+            },
+            {
+                "rawName": "\u00c9gypte",
+                "offsetStart": 7,
+                "offsetEnd": 8,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.6437,
+                "wikipediaExternalRef": 4011,
+                "wikidataId": "Q79",
+                "domains": [
+                    "Geology"
+                ]
+            },
+            {
+                "rawName": "Bernard Montgomery",
+                "offsetStart": 15,
+                "offsetEnd": 17,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9965,
+                "wikipediaExternalRef": 46225,
+                "wikidataId": "Q152025",
+                "domains": [
+                    "Biology",
+                    "Military"
+                ]
+            },
+            {
+                "rawName": "Erwin Rommel",
+                "offsetStart": 20,
+                "offsetEnd": 22,
+                "nerd_score": 1,
+                "nerd_selection_score": 0.9955,
+                "wikipediaExternalRef": 46221,
+                "wikidataId": "Q14060",
+                "domains": [
+                    "Military"
+                ]
+            }
+        ]
+    }
+}
 ```
 
 The Entity-Fishing API response for a metadata query can be accessed as such:
@@ -196,7 +342,20 @@ The Entity-Fishing API response for a metadata query can be accessed as such:
 doc._.metadata
 ```
 ```
-{'status_code': 200, 'reason': 'OK', 'ok': True, 'encoding': 'utf-8'}
+{
+    "disambiguation_text_service": {
+        "status_code": 200,
+        "reason": "OK",
+        "ok": true,
+        "encoding": "utf-8"
+    },
+    "disambiguation_terms_service": {
+        "status_code": 200,
+        "reason": "OK",
+        "ok": true,
+        "encoding": "utf-8"
+    }
+}
 ```
 
 ## Configuration parameters
@@ -214,8 +373,8 @@ doc._.metadata
 * **Doc** extensions:
 
     ```
-   doc._.annotations :  Entity-Fishing API's raw response.
-   doc._.metadata    :  Raw information about request and response from the Entity-Fishing API.
+   doc._.annotations  :  Entity-Fishing API's raw response (disambiguisation service using text or terms in query).
+   doc._.metadata     :  Raw information about request and response from the Entity-Fishing API (disambiguisation service using text or terms in query).
    ```
 
 * **Span** extensions:
