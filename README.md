@@ -481,7 +481,7 @@ spacy.displacy.serve(params, style="ent", manual=True, options=options)
 
 The visualizer is available on port 5000.
 
-## External ressources
+## External resources
 
 - [spaCy homepage](https://spacy.io/)
 - [spaCy GitHub](https://github.com/explosion/spaCy)
