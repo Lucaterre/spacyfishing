@@ -22,7 +22,7 @@ This extension allows using Entity-Fishing tool as a spaCy pipeline component to
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
  * [Visualise results](#Visualise-results) 
- * [External ressources](#External-ressources)
+ * [External resources](#External-resources)
  * [About](#About)
 
 
@@ -399,7 +399,7 @@ doc._.metadata
 
 ```
 - api_ef_base          : URL of the Entity-Fishing API endpoint. Default endpoint is set to Huma-Num server.
-- language             : Specify language of KB ressources for Entity-Fishing API. Defaults to "en".
+- language             : Specify language of KB resources for Entity-Fishing API. Defaults to "en".
 - extra_info           : Get extra Wikidata information about an entity from service "concept look-up" 
                          of Entity-Fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
 - filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...]. Defaults to an empty list.  
