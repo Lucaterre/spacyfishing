@@ -505,7 +505,7 @@ For more details on entity-fishing responses, follow this [link](https://nerd.re
 
 ## Recommendations
 
-By default, and for testing, spacyfishing works on demo server. According to the entity fishing documentation : some query restrictions can be applied, like query limitation, to the demo server. Please do not overload the demo server.
+By default, and for testing, spacyfishing works on demo server. According to the entity fishing documentation: some restrictions can be applied, like query limitation, to the demo server. Please do not overload the demo server.
 
 If entity-fishing is deployed locally or on specific server, specify the URL of the new entity-fishing API endpoint in the config:
 
