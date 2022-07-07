@@ -16,7 +16,7 @@ from spacy.tokens import Doc, Span
 
 
 @Language.factory("entityfishing", default_config={
-    "api_ef_base": "http://nerd.huma-num.fr/nerd/service",
+    "api_ef_base": "https://cloud.science-miner.com/nerd/service",
     "language": "en",
     "extra_info": False,
     "filter_statements": [],
@@ -226,7 +226,7 @@ class EntityFishing:
             except KeyError:
                 pass
             try:
-                span._.nerd_score = entity['nerd_selection_score']
+                span._.nerd_score = entity['confidence_score']
             except KeyError:
                 pass
             span._.url_wikidata = self.wikidata_url_base + span._.kb_qid

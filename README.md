@@ -4,9 +4,9 @@
 
 <!-- add pip badge -->
 
-A spaCy wrapper for [Entity-Fishing](https://github.com/kermitt2/entity-fishing), a tool for named entity recognition, linking and disambiguation against Wikidata.
+A spaCy wrapper for [entity-fishing](https://github.com/kermitt2/entity-fishing), a tool for named entity recognition, linking and disambiguation against Wikidata.
 
-This extension allows using Entity-Fishing tool as a spaCy pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to the Wikidata knowledge base (KB).
+This extension allows using entity-fishing tool as a spaCy pipeline component to disambiguate and link named entities (with custom or pretrained NER spaCy models) to the Wikidata knowledge base (KB).
 
 ## Table of contents
 
@@ -17,7 +17,7 @@ This extension allows using Entity-Fishing tool as a spaCy pipeline component to
     - [Simple example](#Simple-example)
     - [Get extra information from Wikidata](#Get-extra-information-from-Wikidata)
     - [Use other language](#Use-other-language)
-    - [Get information about Entity fishing API response](#Get-information-about-Entity-fishing-API-response)
+    - [Get information about entity fishing API response](#Get-information-about-entity-fishing-API-response)
  * [Configuration parameters](#Configuration-parameters)
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
@@ -162,11 +162,11 @@ for ent in doc_fr.ents:
 ('Erwin Rommel', 'PER', 'Q14060', 'https://www.wikidata.org/wiki/Q14060')
 ```
 
-All languages available with Entity-Fishing are documented [here](https://nerd.readthedocs.io/en/latest/restAPI.html#supported-languages).
+All languages available with entity-fishing are documented [here](https://nerd.readthedocs.io/en/latest/restAPI.html#supported-languages).
 
-### Get information about Entity fishing API response
+### Get information about entity fishing API response
 
-The raw response of the Entity-fishing API can be accessed in the doc object:
+The raw response of the entity-fishing API can be accessed in the doc object:
 
 ```
 doc._.annotations
@@ -174,7 +174,10 @@ doc._.annotations
 ```
 {
   "disambiguation_text_service": {
-    "runtime": 66,
+    "software": "entity-fishing",
+    "version": "0.0.5",
+    "date": "2022-07-07T15:48:33.476Z",
+    "runtime": 249,
     "nbest": false,
     "text": "Austria invaded and fought the Serbian army at the Battle of Cer and \n        Battle of Kolubara beginning on 12 August. \n\nThe army, led by general Paul von Hindenburg \n        defeated Russia in a series of battles collectively known as the First Battle of Tannenberg \n        (17 August – 2 September). But the failed Russian invasion, causing the fresh German troops to move to the east, \n        allowed the tactical Allied victory at the First Battle of the Marne.",
     "language": {
@@ -183,63 +186,53 @@ doc._.annotations
     },
     "global_categories": [
       {
-        "weight": 0.009023224816293564,
-        "source": "wikipedia-en",
-        "category": "German military personnel of World War I",
-        "page_id": 10186142
-      },
-      {
-        "weight": 0.009023224816293564,
-        "source": "wikipedia-en",
-        "category": "Grand Crosses of the Military Order of St. Henry",
-        "page_id": 31717093
-      },
-      {
-        "weight": 0.009023224816293564,
+        "weight": 0.009443334100703546,
         "source": "wikipedia-en",
         "category": "Recipients of the Military Merit Cross (Mecklenburg-Schwerin), 1st class",
         "page_id": 39385183
+      },
+      {
+        "weight": 0.009443334100703546,
+        "source": "wikipedia-en",
+        "category": "Grand Crosses of the Military Order of Maria Theresa",
+        "page_id": 55441477
+      },
+      {
+        "weight": 0.009443333466718216,
+        "source": "wikipedia-en",
+        "category": "Military alliances involving France",
+        "page_id": 29038771
       }
     ],
     "entities": [
       {
-        "rawName": "Austria",
-        "offsetStart": 0,
-        "offsetEnd": 1,
-        "nerd_score": 0.995,
-        "nerd_selection_score": 0.3592,
-        "wikipediaExternalRef": 26964606,
-        "wikidataId": "Q40",
-        "domains": [
-          "Atomic_Physic",
-          "Engineering",
-          "Administration",
-          "Geology",
-          "Oceanography",
-          "Earth"
-        ]
-      },
-      {
         "rawName": "Serbian",
         "offsetStart": 5,
         "offsetEnd": 6,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.4361,
+        "confidence_score": 0.3606,
         "wikipediaExternalRef": 75595,
         "wikidataId": "Q9299",
         "domains": [
-          "Biology",
           "Sociology",
-          "Geology",
-          "Pedagogy"
+          "Statistics"
+        ]
+      },
+      {
+        "rawName": "the Battle of Cer",
+        "offsetStart": 8,
+        "offsetEnd": 12,
+        "confidence_score": 0.3998,
+        "wikipediaExternalRef": 1614762,
+        "wikidataId": "Q697748",
+        "domains": [
+          "Military"
         ]
       },
       {
         "rawName": "Kolubara",
         "offsetStart": 16,
         "offsetEnd": 17,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.4694,
+        "confidence_score": 0.4793,
         "wikipediaExternalRef": 2167279,
         "wikidataId": "Q682699",
         "domains": [
@@ -250,26 +243,24 @@ doc._.annotations
         "rawName": "12 August",
         "offsetStart": 19,
         "offsetEnd": 21,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.4162,
+        "confidence_score": 0.4162,
         "wikipediaExternalRef": 1491,
         "wikidataId": "Q2777",
         "domains": [
-          "Biology",
-          "Psychiatry",
-          "Health",
-          "Physics"
+          "Geology",
+          "Oceanography",
+          "Earth"
         ]
       },
       {
         "rawName": "Paul von Hindenburg",
         "offsetStart": 29,
         "offsetEnd": 32,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.9742,
+        "confidence_score": 0.9742,
         "wikipediaExternalRef": 40548,
         "wikidataId": "Q2667",
         "domains": [
+          "Administration",
           "Medicine"
         ]
       },
@@ -277,8 +268,7 @@ doc._.annotations
         "rawName": "Russia",
         "offsetStart": 34,
         "offsetEnd": 35,
-        "nerd_score": 0.995,
-        "nerd_selection_score": 0.3638,
+        "confidence_score": 0.3562,
         "wikipediaExternalRef": 25391,
         "wikidataId": "Q159",
         "domains": [
@@ -291,32 +281,32 @@ doc._.annotations
         "rawName": "Tannenberg",
         "offsetStart": 47,
         "offsetEnd": 48,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.4974,
+        "confidence_score": 0.4878,
         "wikipediaExternalRef": 60142,
         "wikidataId": "Q153858",
         "domains": [
-          "Administration",
-          "Military"
+          "Astronomy",
+          "Administration"
         ]
       },
       {
         "rawName": "Allied",
         "offsetStart": 78,
         "offsetEnd": 79,
-        "nerd_score": 1,
-        "nerd_selection_score": 0.3765,
+        "confidence_score": 0.3726,
         "wikipediaExternalRef": 2198871,
         "wikidataId": "Q215669",
         "domains": [
-          "Administration",
-          "Military"
+          "Administration"
         ]
       }
     ]
   },
   "disambiguation_terms_service": {
-    "runtime": 27,
+    "software": "entity-fishing",
+    "version": "0.0.5",
+    "date": "2022-07-07T15:48:33.628Z",
+    "runtime": 74,
     "nbest": false,
     "shortText": "Austria Serbian the Battle of Cer Kolubara 12 August Paul von Hindenburg Russia Tannenberg 17 August – 2 September Russian German Allied the First Battle of the Marne",
     "language": {
@@ -325,55 +315,131 @@ doc._.annotations
     },
     "global_categories": [
       {
-        "weight": 0.030319253635147377,
+        "weight": 0.050363090951538694,
         "source": "wikipedia-en",
-        "category": "Languages of Finland",
-        "page_id": 912139
+        "category": "Current member states of the United Nations",
+        "page_id": 69812040
       },
       {
-        "weight": 0.030319253635147377,
+        "weight": 0.050363090951538694,
         "source": "wikipedia-en",
-        "category": "Languages of Armenia",
-        "page_id": 946952
+        "category": "Countries in Europe",
+        "page_id": 37691805
       },
       {
-        "weight": 0.030319253635147377,
+        "weight": 0.050363090951538694,
         "source": "wikipedia-en",
-        "category": "Languages of Georgia (country)",
-        "page_id": 8434566
+        "category": "Landlocked countries",
+        "page_id": 3046541
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Member states of the Union for the Mediterranean",
+        "page_id": 25468207
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Austria",
+        "page_id": 707451
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Member states of the Three Seas Initiative",
+        "page_id": 68227939
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Nuclear-free zones",
+        "page_id": 14674730
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Member states of the European Union",
+        "page_id": 30410535
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Central European countries",
+        "page_id": 51861632
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "German-speaking countries and territories",
+        "page_id": 39933497
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "States and territories established in 1955",
+        "page_id": 22462860
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Western European countries",
+        "page_id": 51863690
+      },
+      {
+        "weight": 0.050363090951538694,
+        "source": "wikipedia-en",
+        "category": "Federal constitutional republics",
+        "page_id": 23861362
       }
     ],
     "entities": [
       {
+        "rawName": "Austria",
+        "offsetStart": 0,
+        "offsetEnd": 1,
+        "confidence_score": 0.2677,
+        "wikipediaExternalRef": 26964606,
+        "wikidataId": "Q40",
+        "domains": [
+          "Atomic_Physic",
+          "Engineering",
+          "Geology",
+          "Oceanography",
+          "Earth"
+        ]
+      },
+      {
         "rawName": "Russian",
         "offsetStart": 60,
         "offsetEnd": 61,
-        "nerd_score": 0.8653,
-        "nerd_selection_score": 0.1155,
+        "confidence_score": 0.1155,
         "wikipediaExternalRef": 25431,
         "wikidataId": "Q7737",
         "domains": [
-          "Sociology"
+          "Sociology",
+          "Geology",
+          "Artisanship"
         ]
       },
       {
         "rawName": "German",
         "offsetStart": 66,
         "offsetEnd": 67,
-        "nerd_score": 0.05,
-        "nerd_selection_score": 0.1183,
-        "wikipediaExternalRef": 11867,
-        "wikidataId": "Q183",
+        "confidence_score": 0.101,
+        "wikipediaExternalRef": 11884,
+        "wikidataId": "Q188",
         "domains": [
-          "Administration"
+          "Sociology"
         ]
       }
     ]
   }
 }
+
 ```
 
-The Entity-Fishing API response for a metadata query can be accessed as such:
+The entity-fishing API response for a metadata query can be accessed as such:
 
 ```
 doc._.metadata
@@ -398,11 +464,12 @@ doc._.metadata
 ## Configuration parameters
 
 ```
-- api_ef_base          : URL of the Entity-Fishing API endpoint. Default endpoint is set to Huma-Num server.
-- language             : Specify language of KB resources for Entity-Fishing API. Defaults to "en".
+- api_ef_base          : URL of the entity-fishing API endpoint. Default endpoint is set to Science-Miner server.
+- language             : Specify language of KB resources for entity-fishing API. Defaults to "en".
 - extra_info           : Get extra Wikidata information about an entity from service "concept look-up" 
-                         of Entity-Fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
+                         of entity-fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
 - filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...]. Defaults to an empty list.  
+- verbose              : display logging messages. Defaults to False.
 ```
 
 ## Attributes
@@ -410,8 +477,8 @@ doc._.metadata
 * **Doc** extensions:
 
     ```
-   doc._.annotations  :  Entity-Fishing API's raw response (disambiguisation service using text or terms in query).
-   doc._.metadata     :  Raw information about request and response from the Entity-Fishing API (disambiguisation service using text or terms in query).
+   doc._.annotations  :  entity-fishing API's raw response (disambiguisation service using text or terms in query).
+   doc._.metadata     :  Raw information about request and response from the entity-fishing API (disambiguisation service using text or terms in query).
    ```
 
 * **Span** extensions:
@@ -428,17 +495,19 @@ doc._.metadata
    extra extensions (if `extra_info` set to `True`)
    ----------------------------------------------
    
-   span._.description     : Short concept definition from Wikipedia.
+   span._.description     : Short concept definition from Wikipedia with wikicode.
    span._.src_description : The name of the Wikipedia KB from which the definition comes from (eg. wikipedia-en).
    span._.normal_term     : The normalised term name.
    span._.other_ids       : Other statements in the KB related to a Wikipedia concept.
    ```
 
-For more details on Entity-Fishing responses, follow this [link](https://nerd.readthedocs.io/en/latest/restAPI.html#response)
+For more details on entity-fishing responses, follow this [link](https://nerd.readthedocs.io/en/latest/restAPI.html#response)
 
 ## Recommendations
 
-If Entity-fishing is deployed locally or on specific server, specify the URL of the new Entity-fishing API endpoint in the config:
+By default, and for testing, spacyfishing works on demo server. According to the entity fishing documentation: some restrictions can be applied, like query limitation, to the demo server. Please do not overload the demo server.
+
+If entity-fishing is deployed locally or on specific server, specify the URL of the new entity-fishing API endpoint in the config:
 
 ```
 nlp.add_pipe("entityfishing", config={"api_ef_base": "<api-endpoint>"})
@@ -446,7 +515,7 @@ nlp.add_pipe("entityfishing", config={"api_ef_base": "<api-endpoint>"})
 
 This can be useful if you work with more recent dumps of Wikidata knowledge base or if you want to speed up the pipeline.
 
-To install your own instance of Entity-Fishing, follow this [link](https://nerd.readthedocs.io/en/latest/build.html).
+To install your own instance of entity-fishing, follow this [link](https://nerd.readthedocs.io/en/latest/build.html).
 
 ## Visualise results
 
@@ -487,14 +556,17 @@ The visualizer is available on port 5000.
 - [spaCy GitHub](https://github.com/explosion/spaCy)
 
 
-- [Entity-Fishing GitHub](https://github.com/kermitt2/entity-fishing)
-- [Entity-Fishing web client](http://nerd.huma-num.fr/nerd/)
-- [Entity-Fishing documentation](https://nerd.readthedocs.io/en/latest/)
+- [entity-fishing GitHub](https://github.com/kermitt2/entity-fishing)
+- [entity-fishing web client](http://nerd.huma-num.fr/nerd/)
+- [entity-fishing documentation](https://nerd.readthedocs.io/en/latest/)
+
+
+- [spacyfishing on SpaCy Universe](https://spacy.io/universe/project/spacyfishing)
 
 ## About
 
 This component is experimental. It may be used for research, and it may evolve in the future.
 
-Entity-Fishing is tool created by Patrice Lopez (SCIENCE-MINER), with contributions of Inria Paris, and distributed under Apache 2.0 license. 
+Entity-fishing is tool created by [Patrice Lopez](https://github.com/kermitt2) (SCIENCE-MINER), with contributions of Inria Paris, and distributed under Apache 2.0 license. 
 
-Special thanks to [@HugoSchtr](https://github.com/HugoSchtr) for documentation review.
+Special thanks to [@HugoSchtr](https://github.com/HugoSchtr), [@gromag](https://github.com/gromag) for documentation review.
