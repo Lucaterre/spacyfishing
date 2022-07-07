@@ -403,6 +403,7 @@ doc._.metadata
 - extra_info           : Get extra Wikidata information about an entity from service "concept look-up" 
                          of Entity-Fishing API as a short Wikipedia description, a normalised term, others KB ids. Defaults to false.
 - filter_statements    : If `extra_info` set to True, filter other KB ids in output eg. ['P214', 'P244' ...]. Defaults to an empty list.  
+- verbose              : display logging messages. Defaults to False.
 ```
 
 ## Attributes
