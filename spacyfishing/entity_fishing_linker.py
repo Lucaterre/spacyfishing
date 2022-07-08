@@ -225,7 +225,6 @@ class EntityFishing:
                 span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
                 # if flag + wikipediaextref => search extra infos
                 if self.flag_extra:
-                    pass
                     self.look_extra_informations_on_entity(span, entity)
             except KeyError:
                 pass
