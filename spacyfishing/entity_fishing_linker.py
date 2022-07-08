@@ -172,7 +172,7 @@ class EntityFishing:
         return res_json, metadata
 
     @staticmethod
-    def prepare_data(text: str, terms: str, entities: list, language: dict) -> dict:
+    def prepare_data(text: str, terms: str, entities: list, language: dict, full: bool = False) -> dict:
         """Preprocess data before call Entity-Fishing service.
 
         Parameters:
@@ -181,6 +181,7 @@ class EntityFishing:
             e.g. "ONU Barack Obama president ...".
             entities (list): Specific entities to disambiguate.
             language (dict): Type of language.
+            full (bool): Retrieve extra information or not on entity. Defaults to `False`.
 
         Returns:
             dict (dict): data ready to send.
@@ -198,7 +199,8 @@ class EntityFishing:
                     } for ent in entities
                 ],
                 "mentions": [],
-                "customisation": "generic"
+                "customisation": "generic",
+                "full": "true" if full else "false"
             })
         }
 
@@ -216,20 +218,21 @@ class EntityFishing:
             span = doc[entity['offsetStart']:entity['offsetEnd']]
             try:
                 span._.kb_qid = str(entity['wikidataId'])
+                span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
             except KeyError:
                 pass
             try:
                 span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
                 # if flag + wikipediaextref => search extra infos
                 if self.flag_extra:
-                    self.look_extra_informations_on_entity(span)
+                    pass
+                    self.look_extra_informations_on_entity(span, entity)
             except KeyError:
                 pass
             try:
                 span._.nerd_score = entity['confidence_score']
             except KeyError:
                 pass
-            span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
 
     # ~ Entity-fishing call service methods ~:
 
@@ -263,16 +266,15 @@ class EntityFishing:
                                    files=files,
                                    verbose=self.verbose)
 
-    def look_extra_informations_on_entity(self, span: Span) -> None:
-        """Find and attach to span extra information:
+    def look_extra_informations_on_entity(self, span: Span, res_desc: dict) -> None:
+        """Attach to span extra information:
         normalised term name, description, description source,
         others identifiers (statements attach to QID).
 
         Parameters:
             span (Span): spaCy span object where attach extra information.
+            res_desc (dict): dict that contains extra information on entity.
         """
-        req_desc = self.concept_look_up(span._.wikipedia_page_ref)
-        res_desc = req_desc.json()
         # normalised term name
         try:
             span._.normal_term = res_desc['preferredTerm']
@@ -335,7 +337,8 @@ class EntityFishing:
         data_to_post = self.prepare_data(text=text,
                                          terms=terms,
                                          entities=entities,
-                                         language=self.language)
+                                         language=self.language,
+                                         full=self.flag_extra)
         req = self.disambiguate_text(files=data_to_post)
         res, metadata = self.process_response(response=req)
         try:
