@@ -135,3 +135,6 @@ dmypy.json
 # others files
 test.py
 test_universe.json
+
+LEGACY/
+datatest/
