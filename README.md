@@ -1,8 +1,10 @@
-# spaCy fishing
+<img src="./docs/spacyfishing-logo.png" width="200" align="right">
+
+spaCy fishing
+=====
 
 ![Python Version](https://img.shields.io/badge/Python-%3E%3D%203.7-%2313aab7) [![PyPI version](https://badge.fury.io/py/spacyfishing.svg)](https://badge.fury.io/py/spacyfishing) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Tests](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Lucaterre/spacyfishing/actions/workflows/tests.yml) [![Built with spaCy](https://img.shields.io/badge/built%20with-spaCy-09a3d5.svg)](https://spacy.io)
 
-<!-- add pip badge -->
 
 A spaCy wrapper for [entity-fishing](https://github.com/kermitt2/entity-fishing), a tool for named entity recognition, linking and disambiguation against Wikidata.
 
@@ -568,5 +570,7 @@ The visualizer is available on port 5000.
 This component is experimental. It may be used for research, and it may evolve in the future.
 
 Entity-fishing is tool created by [Patrice Lopez](https://github.com/kermitt2) (SCIENCE-MINER), with contributions of Inria Paris, and distributed under Apache 2.0 license. 
+
+Awesome logo designed by [Alix Chagué](https://github.com/alix-tz).
 
 Special thanks to [@HugoSchtr](https://github.com/HugoSchtr), [@gromag](https://github.com/gromag) for documentation review.
