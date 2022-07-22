@@ -27,7 +27,8 @@ def open_file(file_name: str) -> str:
     with open(file_name, mode="r", encoding="utf-8") as f:
         return f.read()
 
-
+# use the tokenizer and apply the cleaning functions 
+# of your choice 
 def text_preprocessor(text: str) -> list:
     return [sentence.strip() for sentence in text.split("\n") if sentence != ""]
 
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     language = "en"
     filename = "data/text_en.txt"
 
-    # Apply preprocessing
+    # Apply text preprocessing
     sentences = text_preprocessor(open_file(filename))
     huge_text = " ".join(sentences)
 
