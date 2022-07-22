@@ -20,7 +20,7 @@ This extension allows using entity-fishing tool as a spaCy pipeline component to
     - [Get extra information from Wikidata](#Get-extra-information-from-Wikidata)
     - [Use other language](#Use-other-language)
     - [Get information about entity fishing API response](#Get-information-about-entity-fishing-API-response)
-    - [More context for better results : process long text](#More-context-for-better-results-:-process-long-text)
+    - [How to process a long text?](#How-to-process-a-long-text?)
  * [Configuration parameters](#Configuration-parameters)
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
@@ -464,7 +464,7 @@ doc._.metadata
 }
 ```
 
-## More context for better results : process long text
+## How to process a long text?
 
 When processing a long text it is possible to raise an error due to the limit set by `nlp.max_length`.
 It is possible to apply spaCy fishing on a very long text with [`nlp.pipe()`](https://spacy.io/api/language#pipe) method.
