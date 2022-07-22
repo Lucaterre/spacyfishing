@@ -464,7 +464,7 @@ doc._.metadata
 }
 ```
 
-## How to process a long text?
+### How to process a long text?
 
 When processing a long text it is possible to raise an error due to the limit set by `nlp.max_length`.
 It is possible to apply spaCy fishing on a very long text with [`nlp.pipe()`](https://spacy.io/api/language#pipe) method.
