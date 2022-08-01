@@ -8,6 +8,7 @@ as disambiguation and entity linking component.
 
 import logging
 from typing import Tuple
+import json
 
 import requests
 
@@ -186,8 +187,9 @@ class EntityFishing:
         Returns:
             dict (dict): data ready to send.
         """
+
         return {
-            "query": str({
+            "query": json.dumps({
                 "text": text,
                 "shortText": terms,
                 "language": language,
@@ -201,7 +203,7 @@ class EntityFishing:
                 "mentions": [],
                 "customisation": "generic",
                 "full": "true" if full else "false"
-            })
+            }, ensure_ascii=False)
         }
 
     def updated_entities(self, doc: Doc, response: list) -> None:
@@ -339,6 +341,7 @@ class EntityFishing:
                                          entities=entities,
                                          language=self.language,
                                          full=self.flag_extra)
+
         req = self.disambiguate_text(files=data_to_post)
         res, metadata = self.process_response(response=req)
         try:

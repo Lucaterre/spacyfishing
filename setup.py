@@ -35,7 +35,7 @@ setup(
     install_requires=install_requires,
     packages=find_packages(),
     classifiers=CLASSIFIERS,
-    python_requires='>=3.8',
+    python_requires='>=3.7',
     entry_points={
         'spacy_factories': 'entityfishing = spacyfishing.entity_fishing_linker:EntityFishing'
     },

@@ -18,6 +18,8 @@ Process:
     3. Apply complete pipeline on text and retrieve results.
 """
 
+import time
+
 import spacy
 from spacy import Language
 from spacy.tokens import Doc
@@ -67,6 +69,7 @@ class CustomNer:
 
 
 if __name__ == '__main__':
+    start_time = time.time()
     # Set model, language, file that contains text to analyze
     model = "en_core_web_sm"
     language = "en"
@@ -75,6 +78,9 @@ if __name__ == '__main__':
     # Apply text preprocessing
     sentences = text_preprocessor(open_file(filename))
     huge_text = " ".join(sentences)
+
+    print(f"* Total characters in document : {len(huge_text)}")
+    print(f"* Total sentences in document : {len(sentences)}")
 
     # Create pipeline
     huge_pipeline_linking = spacy.blank(language)
@@ -88,3 +94,4 @@ if __name__ == '__main__':
     for ent in doc_linked.ents:
         print(ent.text, ent.label_, ent._.kb_qid)
 
+    print("--- %s seconds ---" % (time.time() - start_time))

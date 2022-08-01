@@ -466,10 +466,15 @@ doc._.metadata
 
 ### How to process a long text?
 
-When processing a long text it is possible to raise an error due to the limit set by `nlp.max_length`.
-It is possible to apply spaCy fishing on a very long text with [`nlp.pipe()`](https://spacy.io/api/language#pipe) method.
-We provide an example with the script [`process_long_text.py`](examples/process_long_text.py) that guarantees 
-to pass all the context of the entities to be disambiguated in entity-fishing.
+Process NER and disambiguate a long text can be really tricky. 
+In fact, spaCy can be raised an exception due to the default limit parameter `nlp.max_length`. 
+The strategy here is to pass a text as batch of sentences with [`nlp.pipe()`](https://spacy.io/api/language#pipe) method and, 
+then pass entities to spacyfishing with all context (not only the sentences, to help disambiguation) and 
+all entities with continuous characters offsets (start and end characters positions are re-calculated). 
+You can use a provided script [`process_long_text.py`](examples/process_long_text.py) that can help to process huge text. 
+For example, a text with `2 073` sentences and `12 901` to disambiguate can be processed in about a minute (with no extra information)
+and in less than 1 minute 30 (with extra information and properties filter applied).
+
 
 ## Configuration parameters
 
