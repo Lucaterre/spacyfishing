@@ -472,7 +472,7 @@ The strategy here is to pass a text as batch of sentences with [`nlp.pipe()`](ht
 then pass entities to spacyfishing with all context (not only the sentences, to help disambiguation) and 
 all entities with continuous characters offsets (start and end characters positions are re-calculated). 
 You can use a provided script [`process_long_text.py`](examples/process_long_text.py) that can help to process huge text. 
-For example, a text with `2 073` sentences and `12 901` to disambiguate can be processed in about a minute (with no extra information)
+For example, a text with `2 073` sentences that contains `12 901` entities to disambiguate can be processed in about a minute (with no extra information)
 and in less than 1 minute 30 (with extra information and properties filter applied).
 
 
