@@ -196,8 +196,8 @@ class EntityFishing:
                 "entities": [
                     {
                         "rawName": ent.text,
-                        "offsetStart": ent.start,
-                        "offsetEnd": ent.end,
+                        "offsetStart": ent.start_char,
+                        "offsetEnd": ent.end_char,
                     } for ent in entities
                 ],
                 "mentions": [],
