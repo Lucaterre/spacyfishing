@@ -95,19 +95,22 @@ class EntityFishing:
                              verbose: bool,
                              params: dict = None,
                              files_batch: List[dict] = None) -> requests.Response:
-        """Client to interact with a generic Rest API.
-
-        Parameters:
-            method (str): service HTTP methods (get, post etc.)
-            url (str): the base URL to the service being used.
-            verbose (bool): display log messages.
-            params (dict): requests parameters.
-            files (dict): requests files.
-
-        Returns:
-            response (requests.Response): query response.
         """
-
+        It takes a list of urls and a list of files, and it sends a request to each url with the
+        corresponding file
+        
+        :param method: str,
+        :type method: str
+        :param url_batch: a list of urls to send requests to
+        :type url_batch: List[str]
+        :param verbose: if True, the client will print out the status of each request
+        :type verbose: bool
+        :param params: dict = None,
+        :type params: dict
+        :param files_batch: a list of dictionaries, each dictionary containing the file to be annotated
+        :type files_batch: List[dict]
+        :return: A list of responses.
+        """
         if params is None:
             params = {}
         if files_batch is None:
@@ -169,18 +172,15 @@ class EntityFishing:
 
     @staticmethod
     def process_response(response: requests.models.Response) -> Tuple[dict, dict]:
-        """decode response in JSON format and
-        retrieve metadata information.
-
-        Parameters:
-            response (requests.models.Response): response from Entity-Fishing
-            service.
-
-        Returns:
-            res_json (dict): response format in JSON.
-            metadata (dict): HTTP information about request.
         """
-
+        It takes a response object from the `requests` library and returns a tuple of two dictionaries.
+        The first dictionary is the JSON response from the API, and the second dictionary contains
+        metadata about the response
+        
+        :param response: The response object returned by the requests library
+        :type response: requests.models.Response
+        :return: A tuple of two dictionaries.
+        """
         try:
             res_json = response.json()
         except requests.exceptions.JSONDecodeError:
@@ -197,20 +197,22 @@ class EntityFishing:
 
     @staticmethod
     def prepare_data(text: str, terms: str, entities: list, language: dict, full: bool = False) -> dict:
-        """Preprocess data before call Entity-Fishing service.
-
-        Parameters:
-            text (str): Text to disambiguate.
-            terms (str): Sequence of terms to disambiguate
-            e.g. "ONU Barack Obama president ...".
-            entities (list): Specific entities to disambiguate.
-            language (dict): Type of language.
-            full (bool): Retrieve extra information or not on entity. Defaults to `False`.
-
-        Returns:
-            dict (dict): data ready to send.
         """
-
+        > The function takes in a text, a list of entities, a language dictionary and a boolean value.
+        It then returns a dictionary with a key called "query" and a value that is a JSON object
+        
+        :param text: The text to be analyzed
+        :type text: str
+        :param terms: the terms to be searched for
+        :type terms: str
+        :param entities: list of entities in the text
+        :type entities: list
+        :param language: the language of the text
+        :type language: dict
+        :param full: if True, the response will contain the full text of the article, defaults to False
+        :type full: bool (optional)
+        :return: A dictionary with a key of "query" and a value of a json object.
+        """
         return {
             "query": json.dumps({
                 "text": text,
@@ -230,14 +232,15 @@ class EntityFishing:
         }
 
     def updated_entities(self, doc: Doc, response: list) -> None:
-        """Attach to span default information: wikidata QID,
-           wikidata url and ranking disambiguation score.
-           Also, Attach to span extra information if flag is set
-           to `True`.
-
-        Parameters:
-            doc (Doc): spaCy doc object.
-            response (list): List that contains disambiguated entities in dict.
+        """
+        > The function `updated_entities` takes a `Doc` object and a list of entities as input. It then
+        iterates over the list of entities and updates the `Doc` object with the information contained
+        in the list of entities
+        
+        :param doc: the document to be processed
+        :type doc: Doc
+        :param response: the response from the NERD API
+        :type response: list
         """
         for entity in response:
             span = doc[entity['offsetStart']:entity['offsetEnd']]
@@ -261,13 +264,12 @@ class EntityFishing:
 
     # ~ Entity-fishing call service methods ~:
     def concept_look_up_batch(self, wiki_id_batch: str) -> requests.Response:
-        """Service returns the knowledge base concept information from QID
-        or Wikipedia page id.
-
-        Parameters:
-            wiki_id (str): Wikidata identifier (QID) or Wikipedia page external reference
-        Returns:
-            response (requests.Response): query response from concept look-up service.
+        """
+        > This function takes a list of wikipedia ids and returns a list of responses from the API
+        
+        :param wiki_id_batch: a list of wikipedia ids
+        :type wiki_id_batch: str
+        :return: A list of requests.Response objects.
         """
         url_concept_lookup_batch = [
             self.api_ef_base + "kb/concept/" + wiki_id for wiki_id in wiki_id_batch]
@@ -277,13 +279,14 @@ class EntityFishing:
                                          verbose=self.verbose)
 
     def disambiguate_text_batch(self, files_batch: List[dict]) -> requests.Response:
-        """Service returns disambiguate entities.
-
-        Parameters:
-            files (dict): JSON format for the query.
-            See also https://nerd.readthedocs.io/en/latest/restAPI.html#generic-format
-        Returns:
-            response (requests.Response): query response from concept look-up service.
+        """
+        > The function `disambiguate_text_batch` takes a list of dictionaries as input, where each
+        dictionary contains the text to be disambiguated and the corresponding language. The function
+        returns a list of responses, where each response contains the disambiguated text
+        
+        :param files_batch: a list of dictionaries, each dictionary containing the following keys:
+        :type files_batch: List[dict]
+        :return: A list of responses.
         """
         url_disambiguate = self.api_ef_base + "disambiguate"
         url_disambiguate_batch = [url_disambiguate for file in files_batch]
@@ -293,13 +296,14 @@ class EntityFishing:
                                          verbose=self.verbose)
 
     def look_extra_informations_on_entity(self, span: Span, res_desc: dict) -> None:
-        """Attach to span extra information:
-        normalised term name, description, description source,
-        others identifiers (statements attach to QID).
-
-        Parameters:
-            span (Span): spaCy span object where attach extra information.
-            res_desc (dict): dict that contains extra information on entity.
+        """
+        It takes a span and a dictionary of information about the entity, and adds the information to
+        the span
+        
+        :param span: The Span object that the extension is being applied to
+        :type span: Span
+        :param res_desc: the result of the query to Wikidata
+        :type res_desc: dict
         """
         # normalised term name
         try:
@@ -340,6 +344,18 @@ class EntityFishing:
                                           text_batch: List[str],
                                           terms_batch: List[str],
                                           entities_batch: List[list]) -> List[Tuple[dict, dict, list]]:
+        """
+        It takes a batch of text, terms and entities, and returns a batch of disambiguated entities
+        
+        :param text_batch: a list of strings, each string is a text to be disambiguated
+        :type text_batch: List[str]
+        :param terms_batch: a list of strings, each string is a list of terms separated by a space
+        :type terms_batch: List[str]
+        :param entities_batch: a list of lists of entities, where each entity is a dictionary with the
+        following keys:
+        :type entities_batch: List[list]
+        :return: A list of tuples, each tuple containing the response, metadata, and entities_enhanced.
+        """
         data_to_post_batch = [self.prepare_data(text=text,
                                                 terms=terms,
                                                 entities=entities,
@@ -358,6 +374,20 @@ class EntityFishing:
         return response_tuples
 
     def process_single_doc_after_call(self, doc: Doc, result_from_ef_text) -> Doc:
+        """
+        - The function takes a document and a list of entities from the Entity-Fishing service. 
+        - It then checks if there are any entities in the document that were not disambiguated by the
+        Entity-Fishing service. 
+        - If there are, it passes the text of these entities to the Entity-Fishing service again, but
+        this time without the text of the document. 
+        - It then merges the results of the two calls to the Entity-Fishing service and attaches the
+        information from the Entity-Fishing service to the entities in the document
+        
+        :param doc: The document to be processed
+        :type doc: Doc
+        :param result_from_ef_text: a list of three elements:
+        :return: A list of dictionaries, each dictionary contains the information of a single entity.
+        """
         entities_from_text = result_from_ef_text[2]
 
         # 1a. Attach raw response (with text method in Entity-Fishing service) to doc
@@ -421,7 +451,14 @@ class EntityFishing:
         return doc
 
     def __call__(self, doc: Doc,) -> Doc:
-        """Attaches entities to spans (and doc)."""
+        """
+        > The function takes a spaCy Doc object, and returns a Doc object with the entities
+        disambiguated and linked
+        
+        :param doc: Doc
+        :type doc: Doc
+        :return: A Doc object with the entities linked to the corresponding Wikipedia page.
+        """
         # 1. Disambiguate and linking named entities in Doc object with Entity-Fishing
         result_from_ef_text = self.main_disambiguation_process_batch(
             text_batch=[doc.text],
@@ -432,10 +469,10 @@ class EntityFishing:
 
     def pipe(self, stream, batch_size=128):
         """
-        It takes a stream of documents, and for each document,
-        it generates a list of sentence triplets,
-        and then sets the annotations for each sentence in the document
-        :param stream: a generator of Doc objects
+        For each batch of documents, we disambiguate the named entities in the documents, and then yield
+        the results
+        
+        :param stream: a generator that yields Doc objects
         :param batch_size: The number of documents to process at a time, defaults to 128 (optional)
         """
         for docs in util.minibatch(stream, size=batch_size):
