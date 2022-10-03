@@ -217,7 +217,8 @@ class EntityFishing:
             response (list): List that contains disambiguated entities in dict.
         """
         for entity in response:
-            span = doc[entity['offsetStart']:entity['offsetEnd']]
+            span = doc.char_span(start_idx=entity['offsetStart'],
+                                 end_idx=entity['offsetEnd'])
             try:
                 span._.kb_qid = str(entity['wikidataId'])
                 span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
@@ -375,9 +376,10 @@ class EntityFishing:
         if len(result_from_ef_text[0]) > 0:
             try:
                 nil_clustering = [
-                    doc[ent[1]:ent[2]] for ent in [
+                    doc.char_span(start_idx=ent[1],
+                                  end_idx=ent[2]) for ent in [
                         (
-                            ent.text, ent.start, ent.end
+                            ent.text, ent.start_char, ent.end_char
                         ) for ent in doc.ents
                     ] if ent not in [
                         (
