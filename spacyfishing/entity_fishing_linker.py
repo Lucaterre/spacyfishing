@@ -7,9 +7,9 @@ as disambiguation and entity linking component.
 """
 
 import concurrent.futures
-import enum
 import json
 import logging
+from email import iterators
 from typing import List, Tuple
 
 import requests
@@ -94,11 +94,11 @@ class EntityFishing:
                              url_batch: List[str],
                              verbose: bool,
                              params: dict = None,
-                             files_batch: List[dict] = None) -> requests.Response:
+                             files_batch: List[dict] = None) -> List[requests.Response]:
         """
         It takes a list of urls and a list of files, and it sends a request to each url with the
         corresponding file
-        
+
         :param method: str,
         :type method: str
         :param url_batch: a list of urls to send requests to
@@ -176,7 +176,7 @@ class EntityFishing:
         It takes a response object from the `requests` library and returns a tuple of two dictionaries.
         The first dictionary is the JSON response from the API, and the second dictionary contains
         metadata about the response
-        
+
         :param response: The response object returned by the requests library
         :type response: requests.models.Response
         :return: A tuple of two dictionaries.
@@ -200,7 +200,7 @@ class EntityFishing:
         """
         > The function takes in a text, a list of entities, a language dictionary and a boolean value.
         It then returns a dictionary with a key called "query" and a value that is a JSON object
-        
+
         :param text: The text to be analyzed
         :type text: str
         :param terms: the terms to be searched for
@@ -221,8 +221,8 @@ class EntityFishing:
                 "entities": [
                     {
                         "rawName": ent.text,
-                        "offsetStart": ent.start,
-                        "offsetEnd": ent.end,
+                        "offsetStart": ent.start_char,
+                        "offsetEnd": ent.end_char,
                     } for ent in entities
                 ],
                 "mentions": [],
@@ -236,7 +236,7 @@ class EntityFishing:
         > The function `updated_entities` takes a `Doc` object and a list of entities as input. It then
         iterates over the list of entities and updates the `Doc` object with the information contained
         in the list of entities
-        
+
         :param doc: the document to be processed
         :type doc: Doc
         :param response: the response from the NERD API
@@ -264,10 +264,10 @@ class EntityFishing:
                 pass
 
     # ~ Entity-fishing call service methods ~:
-    def concept_look_up_batch(self, wiki_id_batch: str) -> requests.Response:
+    def concept_look_up_batch(self, wiki_id_batch: str) -> List[requests.Response]:
         """
         > This function takes a list of wikipedia ids and returns a list of responses from the API
-        
+
         :param wiki_id_batch: a list of wikipedia ids
         :type wiki_id_batch: str
         :return: A list of requests.Response objects.
@@ -284,7 +284,7 @@ class EntityFishing:
         > The function `disambiguate_text_batch` takes a list of dictionaries as input, where each
         dictionary contains the text to be disambiguated and the corresponding language. The function
         returns a list of responses, where each response contains the disambiguated text
-        
+
         :param files_batch: a list of dictionaries, each dictionary containing the following keys:
         :type files_batch: List[dict]
         :return: A list of responses.
@@ -300,7 +300,7 @@ class EntityFishing:
         """
         It takes a span and a dictionary of information about the entity, and adds the information to
         the span
-        
+
         :param span: The Span object that the extension is being applied to
         :type span: Span
         :param res_desc: the result of the query to Wikidata
@@ -347,7 +347,7 @@ class EntityFishing:
                                           entities_batch: List[list]) -> List[Tuple[dict, dict, list]]:
         """
         It takes a batch of text, terms and entities, and returns a batch of disambiguated entities
-        
+
         :param text_batch: a list of strings, each string is a text to be disambiguated
         :type text_batch: List[str]
         :param terms_batch: a list of strings, each string is a list of terms separated by a space
@@ -376,14 +376,14 @@ class EntityFishing:
 
     def process_single_doc_after_call(self, doc: Doc, result_from_ef_text) -> Doc:
         """
-        - The function takes a document and a list of entities from the Entity-Fishing service. 
+        - The function takes a document and a list of entities from the Entity-Fishing service.
         - It then checks if there are any entities in the document that were not disambiguated by the
-        Entity-Fishing service. 
+        Entity-Fishing service.
         - If there are, it passes the text of these entities to the Entity-Fishing service again, but
-        this time without the text of the document. 
+        this time without the text of the document.
         - It then merges the results of the two calls to the Entity-Fishing service and attaches the
         information from the Entity-Fishing service to the entities in the document
-        
+
         :param doc: The document to be processed
         :type doc: Doc
         :param result_from_ef_text: a list of three elements:
@@ -452,11 +452,11 @@ class EntityFishing:
 
         return doc
 
-    def __call__(self, doc: Doc,) -> Doc:
+    def __call__(self, doc: Doc) -> Doc:
         """
         > The function takes a spaCy Doc object, and returns a Doc object with the entities
         disambiguated and linked
-        
+
         :param doc: Doc
         :type doc: Doc
         :return: A Doc object with the entities linked to the corresponding Wikipedia page.
@@ -469,13 +469,15 @@ class EntityFishing:
         )[0]
         return self.process_single_doc_after_call(doc, result_from_ef_text)
 
-    def pipe(self, stream, batch_size=128):
+    def pipe(self, stream: iterators, batch_size: int = 128) -> Doc:
         """
         For each batch of documents, we disambiguate the named entities in the documents, and then yield
         the results
-        
+
         :param stream: a generator that yields Doc objects
+        :type stream: iterator
         :param batch_size: The number of documents to process at a time, defaults to 128 (optional)
+        :type batch_size: int
         """
         for docs in util.minibatch(stream, size=batch_size):
             text_batch = [doc.text for doc in docs]
