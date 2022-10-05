@@ -17,6 +17,7 @@ This extension allows using entity-fishing tool as a spaCy pipeline component to
    * [development](#development)
  * [Usage (examples)](#Usage)
     - [Simple example](#Simple-example)
+    - [Batching example](#Batching-example)
     - [Get extra information from Wikidata](#Get-extra-information-from-Wikidata)
     - [Use other language](#Use-other-language)
     - [Get information about entity fishing API response](#Get-information-about-entity-fishing-API-response)
@@ -94,7 +95,8 @@ nlp_model_en = spacy.load("en_core_web_sm")
 
 nlp_model_en.add_pipe("entityfishing")
 
-docs_en = nlp_model_en.pipe(texts_en)
+# set number of documents to be processed at once via batch_size
+docs_en = nlp_model_en.pipe(texts_en, batch_size=128)
 
 for doc_en in docs_en:
     for ent in doc_en.ents:
