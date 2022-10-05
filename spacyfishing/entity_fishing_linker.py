@@ -6,13 +6,14 @@ SpaCy wrapper to call Entity-fishing API
 as disambiguation and entity linking component.
 """
 
+import requests
 import concurrent.futures
 import json
 import logging
+
 from email import iterators
 from typing import List, Tuple
 
-import requests
 from spacy import util
 from spacy.language import Language
 from spacy.tokens import Doc, Span
@@ -243,24 +244,27 @@ class EntityFishing:
         :type response: list
         """
         for entity in response:
-            span = doc.char_span(start_idx=entity['offsetStart'],
-                                 end_idx=entity['offsetEnd'])
             try:
-                span._.kb_qid = str(entity['wikidataId'])
-                span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
-            except KeyError:
-                pass
-            try:
-                span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
-                # if flag_extra : search other info on entity
-                # => attach extra entity info to span
-                if self.flag_extra:
-                    self.look_extra_informations_on_entity(span, entity)
-            except KeyError:
-                pass
-            try:
-                span._.nerd_score = entity['confidence_score']
-            except KeyError:
+                span = doc.char_span(start_idx=entity['offsetStart'],
+                                     end_idx=entity['offsetEnd'])
+                try:
+                    span._.kb_qid = str(entity['wikidataId'])
+                    span._.url_wikidata = self.wikidata_url_base + span._.kb_qid
+                except KeyError:
+                    pass
+                try:
+                    span._.wikipedia_page_ref = str(entity["wikipediaExternalRef"])
+                    # if flag_extra : search other info on entity
+                    # => attach extra entity info to span
+                    if self.flag_extra:
+                        self.look_extra_informations_on_entity(span, entity)
+                except KeyError:
+                    pass
+                try:
+                    span._.nerd_score = entity['confidence_score']
+                except KeyError:
+                    pass
+            except AttributeError:
                 pass
 
     # ~ Entity-fishing call service methods ~:
@@ -279,7 +283,7 @@ class EntityFishing:
                                          params=self.language,
                                          verbose=self.verbose)
 
-    def disambiguate_text_batch(self, files_batch: List[dict]) -> requests.Response:
+    def disambiguate_text_batch(self, files_batch: List[dict]) -> List[requests.Response]:
         """
         > The function `disambiguate_text_batch` takes a list of dictionaries as input, where each
         dictionary contains the text to be disambiguated and the corresponding language. The function

@@ -21,7 +21,6 @@ This extension allows using entity-fishing tool as a spaCy pipeline component to
     - [Get extra information from Wikidata](#Get-extra-information-from-Wikidata)
     - [Use other language](#Use-other-language)
     - [Get information about entity fishing API response](#Get-information-about-entity-fishing-API-response)
-    - [How to process a long text?](#How-to-process-a-long-text?)
  * [Configuration parameters](#Configuration-parameters)
  * [Attributes](#Attributes)
  * [Recommendations](#Recommendations)
@@ -496,18 +495,6 @@ doc._.metadata
 }
 ```
 
-### How to process a long text?
-
-Process NER and disambiguate a long text can be really tricky.
-In fact, spaCy can be raised an exception due to the default limit parameter `nlp.max_length`.
-The strategy here is to pass a text as batch of sentences with [`nlp.pipe()`](https://spacy.io/api/language#pipe) method and,
-then pass entities to spacyfishing with all context (not only the sentences, to help disambiguation) and
-all entities with continuous characters offsets (start and end characters positions are re-calculated).
-You can use a provided script [`process_long_text.py`](examples/process_long_text.py) that can help to process huge text.
-For example, a text with `2 073` sentences that contains `12 901` entities to disambiguate can be processed in about a minute (with no extra information)
-and in less than 1 minute 30 (with extra information and properties filter applied).
-
-
 ## Configuration parameters
 
 ```
@@ -618,4 +605,10 @@ Entity-fishing is tool created by [Patrice Lopez](https://github.com/kermitt2) (
 
 Awesome logo designed by [Alix Chagué](https://github.com/alix-tz).
 
-Special thanks to [@HugoSchtr](https://github.com/HugoSchtr), [@gromag](https://github.com/gromag) for documentation review.
+Special thanks to 
+
+- Documentation review:
+[@HugoSchtr](https://github.com/HugoSchtr), [@gromag](https://github.com/gromag) 
+
+- Code contribution:
+[@davidberenstein1957](https://github.com/davidberenstein1957)
