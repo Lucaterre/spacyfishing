@@ -184,7 +184,7 @@ class EntityFishing:
         """
         try:
             res_json = response.json()
-        except requests.exceptions.JSONDecodeError:
+        except json.decoder.JSONDecodeError:
             res_json = {}
 
         metadata = {
@@ -342,7 +342,7 @@ class EntityFishing:
             span._.other_ids = ids
         except KeyError:
             pass
-        except requests.exceptions.JSONDecodeError:
+        except json.decoder.JSONDecodeError:
             pass
 
     def main_disambiguation_process_batch(self,
