@@ -591,7 +591,7 @@ The visualizer is available on port 5000.
 
 
 - [entity-fishing GitHub](https://github.com/kermitt2/entity-fishing)
-- [entity-fishing web client](http://nerd.huma-num.fr/nerd/)
+- [entity-fishing web client](https://cloud.science-miner.com/nerd/)
 - [entity-fishing documentation](https://nerd.readthedocs.io/en/latest/)
 
 
